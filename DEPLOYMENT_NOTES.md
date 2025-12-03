@@ -1,85 +1,246 @@
-# Deployment Notes - Image Upload Fix
+# Deployment Notes - Webflow Cloud
 
-## Issue
-Getting `413 Request Entity Too Large` error when uploading images in production.
+**Last Updated:** December 3, 2025
 
-## Root Cause
-The reverse proxy (OpenResty/nginx) in front of Cloudflare Workers has a default request body size limit (typically 1MB) that was being exceeded by large image uploads.
+---
 
-## Solution
-Implemented client-side image compression before upload to ensure images stay under the size limit.
+## ⚠️ Important: Dev Dependencies
 
-### Changes Made:
+### The Issue
+The following packages are **NOT** included in `package.json` because they break Webflow Cloud deployment:
+- `better-sqlite3` - Requires native compilation (C++ bindings)
+- `drizzle-kit` - Only needed for local schema changes
+- `tsx` - Only needed for local TypeScript scripts
 
-1. **Added Image Compression Library**
-   - Installed `browser-image-compression` package
-   - Automatically compresses images to ~1MB before upload
-   - Reduces to max 1920px width/height
-   - Converts to JPEG for optimal compression
+These packages work fine locally but cause `npm ci` to fail during deployment.
 
-2. **Updated File Size Limits**
-   - Images: 1.5MB max (after compression, most will be ~1MB)
-   - Videos: 10MB max (down from 50MB)
-   - Added clear error messages for users
+### For Local Development
 
-3. **Enhanced User Experience**
-   - Shows compression status while processing
-   - Displays file size information
-   - Logs compression details (original vs compressed)
+When you clone this repo and want to work with the database locally, install these manually:
 
-4. **Added Comprehensive Logging**
-   - Server-side logs for all upload/media operations
-   - Client-side logs for debugging image loading
-   - Emoji prefixes for easy log scanning:
-     - 📤 Uploads
-     - 🖼️ Media URLs
-     - ✅ Success
-     - ❌ Errors
-     - 🔄 In progress
+```bash
+npm install --save-dev drizzle-kit tsx better-sqlite3
+```
 
-5. **Fixed Navigation Links**
-   - Home → Main Webflow site
-   - Life Events → Main Webflow site `/life-events`
-   - Recipes → Main Webflow site `/recipes`
-   - Share a Memory → App home
-   - Guestbook → App guestbook
+**Do NOT commit these to `package.json`** - they will break deployment.
 
-## Testing Instructions
+---
 
-### Before Deploying:
-1. Test locally with various image sizes:
-   - Small images (<1MB) - should upload without compression
-   - Large images (>1MB) - should be automatically compressed
-   - Very large images (>5MB) - should compress significantly
+## 📋 Deployment Checklist
 
-2. Check browser console for compression logs:
-   ```
-   📷 Original image: { name, size, type }
-   🔄 Compressing image...
-   ✅ Compressed image: { size, reduction }
+### Before Deploying
+
+1. ✅ **Ensure migrations are in `migrations/` directory**
+   - Webflow Cloud auto-applies migrations from this folder
+   - NOT from `drizzle/` folder
+
+2. ✅ **Database schema changes workflow:**
+   ```bash
+   # 1. Edit schema locally
+   npm install --save-dev drizzle-kit  # If not installed
+   npm run db:generate                 # Creates migration in drizzle/
+   
+   # 2. Move to migrations folder
+   mv drizzle/0001_*.sql migrations/
+   
+   # 3. Test locally
+   npm run db:apply:local
+   
+   # 4. Commit and push (WITHOUT the dev dependencies)
+   git add migrations/ src/db/schema/
+   git commit -m "feat: Add new database schema"
+   git push
    ```
 
-### After Deploying:
-1. Upload a test memory with an image in production
-2. Verify the image displays correctly
-3. Check that the 413 error no longer occurs
-4. Test navigation links work correctly
+3. ✅ **Check `.env` is NOT committed**
+   - Webflow Cloud provides env vars automatically
+   - Local `.env` should be in `.gitignore`
 
-## Deployment Checklist
-- [ ] Deploy updated code to production
-- [ ] Test image upload with various sizes
-- [ ] Verify images display correctly
-- [ ] Test navigation links
-- [ ] Monitor server logs for any errors
-- [ ] Check that existing memories still display
+4. ✅ **Verify `wrangler.jsonc` bindings:**
+   ```jsonc
+   {
+     "d1_databases": [{
+       "binding": "DB",  // Must match locals.runtime.env.DB
+       "database_name": "memory-wall-db",
+       "database_id": "your-db-id",
+       "migrations_dir": "migrations"  // Auto-applies on deploy
+     }],
+     "r2_buckets": [{
+       "binding": "MEDIA_BUCKET",
+       "bucket_name": "memory-wall-media"
+     }]
+   }
+   ```
 
-## Rollback Plan
-If issues occur, you can revert to the previous version. However, note that:
-- Old code will still have the 413 error
-- Consider adjusting Webflow's reverse proxy limits instead
+---
 
-## Future Improvements
-1. Consider adding video compression
-2. Implement progress bars for uploads
-3. Add image preview before compression
-4. Support multiple image uploads per memory
+## 🚀 Deployment Command
+
+```bash
+# From your local machine (not sandbox)
+webflow deploy
+```
+
+### What Happens During Deployment
+
+1. **npm ci** - Clean install of production dependencies
+2. **Migration auto-apply** - Runs all SQL files in `migrations/`
+3. **astro build** - Builds the production bundle
+4. **Upload to Cloudflare** - Deploys Workers and static assets
+
+---
+
+## 🐛 Common Deployment Errors
+
+### Error: "Missing: @esbuild/... from lock file"
+
+**Cause:** `package-lock.json` doesn't match `package.json`
+
+**Fix:**
+```bash
+rm package-lock.json
+npm install
+git add package-lock.json
+git commit -m "fix: Regenerate lockfile"
+git push
+```
+
+### Error: "Command failed: npm ci"
+
+**Cause:** Native dependencies in `package.json` (like `better-sqlite3`)
+
+**Fix:** Remove them from `package.json` and `package-lock.json`:
+```bash
+npm uninstall better-sqlite3 drizzle-kit tsx
+git add package.json package-lock.json
+git commit -m "fix: Remove native dependencies"
+git push
+```
+
+### Error: "Table does not exist"
+
+**Cause:** Migrations weren't applied
+
+**Fix:** 
+1. Check migrations are in `migrations/` folder (not `drizzle/`)
+2. Check `wrangler.jsonc` has `"migrations_dir": "migrations"`
+3. Re-deploy (migrations auto-apply)
+
+---
+
+## 📦 What's Included vs. What's Not
+
+### ✅ Included in Production Build
+- All React components (`src/components/`)
+- All API routes (`src/pages/api/`)
+- Database helper (`src/db/getDb.ts`)
+- Schema definitions (`src/db/schema/`)
+- DevLink components (`src/site-components/`)
+- Production dependencies (Astro, React, Drizzle ORM, etc.)
+
+### ❌ NOT Included (Local Dev Only)
+- `better-sqlite3` - Native SQLite bindings
+- `drizzle-kit` - Schema migration generator
+- `tsx` - TypeScript executor
+- `.env` file - Use Webflow Cloud env vars
+- `node_modules/` - Installed during build
+
+---
+
+## 🔐 Environment Variables
+
+### Webflow Cloud Auto-Provides
+- `DB` - D1 Database binding (from wrangler.jsonc)
+- `MEDIA_BUCKET` - R2 Bucket binding (from wrangler.jsonc)
+
+### You Need to Set in Webflow Dashboard
+- `WEBFLOW_CMS_SITE_API_TOKEN` - For CMS access (if using CMS)
+- Any other custom API keys your app needs
+
+**Important:** Never commit `.env` to git!
+
+---
+
+## 🧪 Testing Before Deployment
+
+### Local Testing with Cloudflare Environment
+
+```bash
+# Build and preview with Wrangler
+npm run preview
+
+# Access at http://localhost:8788
+```
+
+This runs your app in a local Cloudflare Workers environment, simulating production.
+
+### Verify Database Works
+
+1. Check health endpoint:
+   ```bash
+   curl http://localhost:8788/api/health
+   ```
+
+2. Test API routes:
+   ```bash
+   # List memories
+   curl http://localhost:8788/api/memories
+
+   # Create memory
+   curl -X POST http://localhost:8788/api/memories \
+     -H "Content-Type: application/json" \
+     -d '{"headline":"Test","name":"User","email":"test@example.com","memory":"Test memory"}'
+   ```
+
+---
+
+## 📝 Post-Deployment Checklist
+
+After successful deployment:
+
+1. ✅ Visit your production URL
+2. ✅ Test memory wall - create a memory
+3. ✅ Test guestbook - sign the guestbook
+4. ✅ Check likes work
+5. ✅ Upload an image (tests R2 bucket)
+6. ✅ Check DevLink components render correctly
+
+---
+
+## 🆘 Emergency Rollback
+
+If deployment breaks production:
+
+```bash
+# In Webflow dashboard
+1. Go to your app
+2. Click "Deployments"
+3. Find previous working version
+4. Click "Rollback"
+```
+
+---
+
+## 📚 Related Documentation
+
+- `DATABASE_SETUP.md` - Full database documentation
+- `CHAT_MEMORY.md` - Session context and implementation details
+- `DATABASE_FIX_SUMMARY.md` - What changed and why
+- `CLOUDFLARE_CONFIG.md` - Cloudflare-specific configuration
+
+---
+
+## 🎯 Success Metrics
+
+A successful deployment should have:
+- ✅ Build completes without errors
+- ✅ Migrations applied automatically
+- ✅ App accessible at production URL
+- ✅ Database operations work (create, read, update, like)
+- ✅ File uploads work (R2 bucket)
+- ✅ DevLink components render
+- ✅ No console errors in browser
+
+---
+
+**Remember:** The sandbox environment has limited disk space and can't compile native dependencies. Always test locally before deploying!
