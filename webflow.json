@@ -1,19 +1,20 @@
 {
-  "cloud": {
-    "framework": "astro"
-  },
-  "devlink": {
-    "rootDir": "./devlink",
-    "cssModules": true,
-    "fileExtensions": {
-      "js": "jsx"
+    "cloud": {
+        "framework": "astro",
+        "project_id": "3d053399-84b5-4729-b166-56ac59e945a3"
+    },
+    "devlink": {
+        "rootDir": "./devlink",
+        "cssModules": true,
+        "fileExtensions": {
+            "js": "jsx"
+        }
+    },
+    "telemetry": {
+        "global": {
+            "allowTelemetry": true,
+            "lastPrompted": 1764298282678,
+            "version": "1.8.48"
+        }
     }
-  },
-  "telemetry": {
-    "global": {
-      "allowTelemetry": true,
-      "lastPrompted": 1764298282678,
-      "version": "1.8.48"
-    }
-  }
 }
