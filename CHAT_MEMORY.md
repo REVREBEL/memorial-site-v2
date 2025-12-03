@@ -429,3 +429,35 @@ Located in `src/site-components/`:
 **End of Chat Memory Document**
 
 *This file contains everything needed to continue the project from this point forward.*
+
+---
+
+## 🔧 Deployment Fix (Added After Initial Commit)
+
+### Issue: npm ci failure during deployment
+
+**Error:**
+```
+ERROR: Command failed: npm ci --no-update-notifier --no-progress
+Missing: @esbuild/linux-x64@0.27.0 from lock file
+```
+
+**Root Cause:**
+- Added dev dependencies to `package.json` (drizzle-kit, tsx, better-sqlite3)
+- Existing `package-lock.json` didn't include these packages
+- `npm ci` requires exact match between package.json and lockfile
+
+**Solution:**
+```bash
+rm -f package-lock.json
+npm install --package-lock-only
+git add package-lock.json
+git commit -m "fix: Regenerate package-lock.json for deployment"
+```
+
+**Commit:** `da877ec` - "fix: Regenerate package-lock.json for deployment"
+
+**Status:** ✅ Fixed - Ready to deploy
+
+---
+
