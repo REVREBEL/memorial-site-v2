@@ -1,181 +1,75 @@
-export const prerender = false;
-
-import type { APIRoute } from 'astro';
-
-interface GuestbookEntry {
-  id: string;
-  name: string;
-  location: string;
-  relationship: string;
-  firstMet: string;
-  message: string;
-  email: string;
-  createdAt: string;
-}
-
-interface KVListKey {
-  name: string;
-}
-
-interface KVListResult {
-  keys: KVListKey[];
-}
-
-interface KVNamespace {
-  list(options: { prefix: string }): Promise<KVListResult>;
-  get(key: string): Promise<string | null>;
-  put(key: string, value: string): Promise<void>;
-}
-
-// CORS headers for production
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-};
-
-export const OPTIONS: APIRoute = async () => {
-  return new Response(null, {
-    status: 204,
-    headers: corsHeaders,
-  });
-};
+import type { APIRoute} from 'astro';
+import { getDb } from '../../../db/getDb';
+import { guestbook } from '../../../db/schema';
+import { desc } from 'drizzle-orm';
 
 export const GET: APIRoute = async ({ locals }) => {
   try {
-    const KV = locals.runtime?.env?.KV as KVNamespace | undefined;
+    const db = getDb(locals);
+    const allEntries = await db
+      .select()
+      .from(guestbook)
+      .orderBy(desc(guestbook.created_at));
     
-    if (!KV) {
-      return new Response(
-        JSON.stringify({ error: 'KV not configured' }),
-        { 
-          status: 500, 
-          headers: { 
-            'Content-Type': 'application/json',
-            ...corsHeaders,
-          } 
-        }
-      );
-    }
-
-    // List all keys with the guestbook: prefix
-    const list = await KV.list({ prefix: 'guestbook:' });
-    
-    // Fetch all entries
-    const entries = await Promise.all(
-      list.keys.map(async (key: KVListKey) => {
-        const value = await KV.get(key.name);
-        return value ? JSON.parse(value) : null;
-      })
-    );
-
-    // Filter out null entries and sort by date (newest first)
-    const validEntries = entries
-      .filter((entry): entry is GuestbookEntry => entry !== null)
-      .sort((a: GuestbookEntry, b: GuestbookEntry) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-
-    return new Response(JSON.stringify(validEntries), {
+    return new Response(JSON.stringify(allEntries), {
       status: 200,
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
-        ...corsHeaders,
       },
     });
   } catch (error) {
-    console.error('Failed to fetch guestbook entries:', error);
-    return new Response(
-      JSON.stringify({ 
-        error: 'Failed to fetch entries',
-        details: error instanceof Error ? error.message : String(error)
-      }),
-      { 
-        status: 500, 
-        headers: { 
-          'Content-Type': 'application/json',
-          ...corsHeaders,
-        } 
-      }
-    );
+    console.error('Error fetching guestbook entries:', error);
+    return new Response(JSON.stringify({ error: 'Failed to fetch entries' }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 };
 
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
-    const KV = locals.runtime?.env?.KV as KVNamespace | undefined;
+    const data = await request.json();
     
-    if (!KV) {
-      return new Response(
-        JSON.stringify({ error: 'KV not configured' }),
-        { 
-          status: 500, 
-          headers: { 
-            'Content-Type': 'application/json',
-            ...corsHeaders,
-          } 
-        }
-      );
-    }
-
-    const body = await request.json() as { 
-      name: string; 
-      location: string; 
-      relationship: string; 
-      firstMet: string; 
-      message: string; 
-      email: string; 
-    };
+    const { name, email, location, relationship, first_met, message } = data;
     
-    const { name, location, relationship, firstMet, message, email } = body;
-
-    if (!name || !location || !relationship || !firstMet || !message || !email) {
+    // Validate required fields
+    if (!name || !message || !email || !relationship) {
       return new Response(
         JSON.stringify({ error: 'Missing required fields' }),
-        { 
-          status: 400, 
-          headers: { 
-            'Content-Type': 'application/json',
-            ...corsHeaders,
-          } 
-        }
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
-
-    const id = crypto.randomUUID();
-    const entry: GuestbookEntry = {
+    
+    // Generate a unique ID
+    const id = `gb_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    
+    const db = getDb(locals);
+    const [entry] = await db.insert(guestbook).values({
       id,
       name,
-      location,
-      relationship,
-      firstMet,
-      message,
       email,
-      createdAt: new Date().toISOString(),
-    };
-
-    // Store in KV with a prefixed key
-    await KV.put(`guestbook:${id}`, JSON.stringify(entry));
-
+      location: location || null,
+      relationship,
+      first_met: first_met || null,
+      message,
+    }).returning();
+    
     return new Response(JSON.stringify(entry), {
       status: 201,
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
-        ...corsHeaders,
       },
     });
   } catch (error) {
-    console.error('Failed to create guestbook entry:', error);
+    console.error('Error creating guestbook entry:', error);
     return new Response(
       JSON.stringify({ 
         error: 'Failed to create entry',
-        details: error instanceof Error ? error.message : String(error)
+        details: error instanceof Error ? error.message : 'Unknown error'
       }),
-      { 
-        status: 500, 
-        headers: { 
-          'Content-Type': 'application/json',
-          ...corsHeaders,
-        } 
-      }
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
 };

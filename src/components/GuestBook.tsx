@@ -186,7 +186,7 @@ export function GuestBook() {
                 <Input
                   id="name"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
                   placeholder="John Doe"
                   required
                 />
@@ -197,7 +197,7 @@ export function GuestBook() {
                 <Input
                   id="location"
                   value={location}
-                  onChange={(e) => setLocation(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLocation(e.target.value)}
                   placeholder="San Francisco, CA"
                   required
                 />
@@ -225,7 +225,7 @@ export function GuestBook() {
               <Input
                 id="firstMet"
                 value={firstMet}
-                onChange={(e) => setFirstMet(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFirstMet(e.target.value)}
                 placeholder="College, work event, mutual friend..."
                 required
               />
@@ -236,7 +236,7 @@ export function GuestBook() {
               <Textarea
                 id="message"
                 value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMessage(e.target.value)}
                 placeholder="Share your thoughts, memories, or well wishes..."
                 rows={4}
                 required
@@ -253,7 +253,7 @@ export function GuestBook() {
                 id="email"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                 placeholder="your@email.com"
                 required
               />
