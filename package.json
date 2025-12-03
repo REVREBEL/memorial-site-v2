@@ -75,6 +75,8 @@
     "@astrojs/check": "0.9.4",
     "@cloudflare/workers-types": "4.20250726.0",
     "@types/turndown": "5.0.6",
+    "@webflow/data-types": "1.0.2",
+    "@webflow/react": "1.0.2",
     "@webflow/webflow-cli": "1.8.49",
     "drizzle-kit": "0.31.7",
     "kill-port": "2.0.1",
