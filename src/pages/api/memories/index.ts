@@ -72,8 +72,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
         );
       }
       
-      const uploadResult = await uploadResponse.json();
-      mediaKey = uploadResult.key;
+      const uploadResult = (await uploadResponse.json()) as {
+        key?: string;
+        filename?: string;
+      };
+      mediaKey = uploadResult.key ?? uploadResult.filename ?? null;
       mediaType = media.type.startsWith('image/') ? 'photo' : 'video';
     }
     

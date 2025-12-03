@@ -3,6 +3,26 @@ import { getDb } from '../../../db/getDb';
 import { guestbook } from '../../../db/schema';
 import { desc } from 'drizzle-orm';
 
+type GuestbookPayload = {
+  name: string;
+  email: string;
+  location?: string | null;
+  relationship: string;
+  first_met?: string | null;
+  message: string;
+};
+
+const isGuestbookPayload = (value: unknown): value is GuestbookPayload => {
+  if (!value || typeof value !== 'object') return false;
+  const data = value as Record<string, unknown>;
+  return (
+    typeof data.name === 'string' &&
+    typeof data.email === 'string' &&
+    typeof data.relationship === 'string' &&
+    typeof data.message === 'string'
+  );
+};
+
 export const GET: APIRoute = async ({ locals }) => {
   try {
     const db = getDb(locals);
@@ -31,6 +51,12 @@ export const GET: APIRoute = async ({ locals }) => {
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
     const data = await request.json();
+    if (!isGuestbookPayload(data)) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid request payload' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
     
     const { name, email, location, relationship, first_met, message } = data;
     
