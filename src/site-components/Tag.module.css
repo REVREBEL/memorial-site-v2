@@ -112,6 +112,51 @@
   background-color: var(--_colors---core-accent-color--accent-secondary);
 }
 
+.tag:where(.w-variant-72edd273-7891-7857-18cf-7aeb113f4abc) {
+  border-top-width: 3px;
+  border-top-color: var(--_colors---core-accent-color--accent-tertiary-hover);
+  border-right-width: 3px;
+  border-right-color: var(--_colors---core-accent-color--accent-tertiary-hover);
+  border-bottom-width: 3px;
+  border-bottom-color: var(--_colors---core-accent-color--accent-tertiary-hover);
+  border-left-width: 3px;
+  border-left-color: var(--_colors---core-accent-color--accent-tertiary-hover);
+
+  color: var(--_colors---core-accent-color--accent-tertiary-hover);
+
+  background-color: color-mix(in srgb, currentColor 5%, transparent);
+}
+
+.tag:where(.w-variant-5a0229ea-6ac7-ada3-1053-85d92cc5888b) {
+  border-top-width: 3px;
+  border-top-color: var(--_colors---core-accent-color--accent-secondary-hover);
+  border-right-width: 3px;
+  border-right-color: var(--_colors---core-accent-color--accent-secondary-hover);
+  border-bottom-width: 3px;
+  border-bottom-color: var(--_colors---core-accent-color--accent-secondary-hover);
+  border-left-width: 3px;
+  border-left-color: var(--_colors---core-accent-color--accent-secondary-hover);
+
+  color: var(--_colors---core-accent-color--accent-secondary-hover);
+
+  background-color: color-mix(in srgb, currentColor 5%, transparent);
+}
+
+.tag:where(.w-variant-eb0b7b5f-742b-2299-54bc-7fccfcd050f0) {
+  border-top-width: 3px;
+  border-top-color: var(--_colors---core-accent-color--accent-primary-hover);
+  border-right-width: 3px;
+  border-right-color: var(--_colors---core-accent-color--accent-primary-hover);
+  border-bottom-width: 3px;
+  border-bottom-color: var(--_colors---core-accent-color--accent-primary-hover);
+  border-left-width: 3px;
+  border-left-color: var(--_colors---core-accent-color--accent-primary-hover);
+
+  color: var(--_colors---core-accent-color--accent-primary-hover);
+
+  background-color: color-mix(in srgb, currentColor 5%, transparent);
+}
+
 @media screen and (max-width: 991px) {
   .tag {
     width: 100%;
@@ -166,6 +211,19 @@
   padding-right: 0.5em;
   padding-bottom: 0.5em;
   padding-left: 0.5em;
+
+  border-top-style: none;
+  border-top-width: 0px;
+  border-top-color: var(--_colors---core-accent-color--accent-tertiary);
+  border-right-style: none;
+  border-right-width: 0px;
+  border-right-color: var(--_colors---core-accent-color--accent-tertiary);
+  border-bottom-style: none;
+  border-bottom-width: 0px;
+  border-bottom-color: var(--_colors---core-accent-color--accent-tertiary);
+  border-left-style: none;
+  border-left-width: 0px;
+  border-left-color: var(--_colors---core-accent-color--accent-tertiary);
 
   transition-duration: 400ms, 400ms, 400ms;
 

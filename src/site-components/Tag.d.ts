@@ -8,6 +8,9 @@ declare function Tag(props: {
     | "Tertiary"
     | "Secondary"
     | "Primary Outline"
+    | "Primary Outline Accent"
     | "Tertiary Outline"
-    | "Secondary Outline";
+    | "Tertiary Outline Accent"
+    | "Secondary Outline"
+    | "Secondary Outline Accent";
 }): React.JSX.Element;
