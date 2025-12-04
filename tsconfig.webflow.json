@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
+  },
+  "include": [
+    "src/components/**/*.tsx",
+    "src/site-components/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "drizzle.config.ts",
+    "src/db",
+    "src/pages"
+  ]
+}

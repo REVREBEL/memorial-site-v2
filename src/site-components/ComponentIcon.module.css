@@ -1,0 +1,30 @@
+.button_icon {
+  display: inline-flex;
+  width: 25px;
+  height: 25px;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 auto;
+
+  color: var(--_apps---colors--primary-foreground-dark);
+}
+
+.button_icon.is-secondary {
+  color: inherit;
+}
+
+@media screen and (max-width: 767px) {
+  .button_icon.is-secondary {
+    color: inherit;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .button_icon.is-secondary:hover {
+    color: inherit;
+  }
+}
+
+.button_icon.is-secondary.is-hidden {
+  display: none;
+}
