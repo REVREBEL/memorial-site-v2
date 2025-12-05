@@ -5,10 +5,11 @@ import * as _Builtin from "./_Builtin";
 export function Tag(
     {
         as: _Component = _Builtin.Block,
-        variant = "Clear",
-        text = "Tag Label",
         visibility = true,
-        id
+        id,
+        colorVariant = "Clear",
+        text = "Tag Label",
+        runtimeProps = {}
     }
 ) {
     const _styleVariantMap = {
@@ -24,6 +25,11 @@ export function Tag(
         "Secondary Outline Accent": "w-variant-5a0229ea-6ac7-ada3-1053-85d92cc5888b"
     };
 
-    const _activeStyleVariant = _styleVariantMap[variant];
-    return visibility ? <_Component className={`tag ${_activeStyleVariant}`} tag="div" id={id}>{text}</_Component> : null;
+    const _activeStyleVariant = _styleVariantMap[colorVariant];
+
+    return visibility ? <_Component
+        className={`tag ${_activeStyleVariant}`}
+        tag="div"
+        id={id}
+        {...runtimeProps}>{text}</_Component> : null;
 }

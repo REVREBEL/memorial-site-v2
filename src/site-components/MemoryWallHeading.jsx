@@ -2,7 +2,7 @@
 import React from "react";
 import * as _Builtin from "./_Builtin";
 import { ButtonFilled } from "./ButtonFilled";
-import { Tag } from "./Tag";
+import { FilterTagsSlots } from "./FilterTagsSlots";
 
 export function MemoryWallHeading(
     {
@@ -48,32 +48,10 @@ export function MemoryWallHeading(
                         buttonText={buttonFilledButtonText}
                         variant={buttonFilledVariant}
                         buttonId={buttonFilledButtonId}
-                        buttonLink={buttonFilledButtonLink} /></_Builtin.Block><_Builtin.Block
-                    className="flex_horizontal width_100percent flex-align_center gap-xsmall padding-inline_mediumn"
-                    tag="div"><Tag
-                        variant={tag1Variant}
-                        text={tag1Text}
-                        visibility={tag1Visibility}
-                        id={tag1Id} /><Tag
-                        variant={tag1Variant}
-                        text={tag2Text}
-                        visibility={tag2Visibility}
-                        id={tag2Id} /><Tag
-                        variant={tag3Variant}
-                        visibility={tag3Visibility}
-                        text={tag3Text}
-                        id={tag3Id} /><Tag
-                        variant={tag4Variant}
-                        text={tag4Text}
-                        visibility={tag4Visibility}
-                        id={tag4Id} /><Tag
-                        variant={tag5Variant}
-                        text={buttonFilledButtonText}
-                        visibility={tag5Visibility}
-                        id={tag5Id} /><Tag
-                        variant={tag6Variant}
-                        text={tag6Text}
-                        visibility={tag6Visibility}
-                        id={tag6Id} /></_Builtin.Block></_Builtin.Block><_Builtin.Block className="padding-global padding-section-large" tag="div"><_Builtin.Block className="container-xlarge" tag="div" /></_Builtin.Block></_Component>
+                        buttonLink={buttonFilledButtonLink} /></_Builtin.Block><FilterTagsSlots
+                    tag3Variant={tag3Variant}
+                    tag4Variant={tag4Variant}
+                    tag5Variant={tag5Variant}
+                    tag6Variant={tag6Variant} /></_Builtin.Block><_Builtin.Block className="padding-global padding-section-large" tag="div"><_Builtin.Block className="guestbook_inner-form-container" tag="div" /></_Builtin.Block></_Component>
     );
 }

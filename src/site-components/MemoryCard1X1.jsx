@@ -36,7 +36,7 @@ export function MemoryCard1X1(
     const _activeStyleVariant = _styleVariantMap[optionsCardColorVariant];
 
     return cardVisability ? <_Component
-        className={`component-color-variant ${_activeStyleVariant}`}
+        className={`component-guestbook-card ${_activeStyleVariant}`}
         id="w-node-_73eb0ae7-e9bf-61cd-60e7-10fbd84d8db9-d84d8db9"
         tag="div"><ComponentSizeVariant
             variant={componentSizeVariantCardSizeVariant}
