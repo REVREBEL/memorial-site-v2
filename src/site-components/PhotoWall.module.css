@@ -97,10 +97,21 @@
   align-self: center;
 }
 
+.eyebrow_component.is-align-center {
+  align-self: center;
+}
+
+.eyebrow_component.is-align-center {
+  align-self: center;
+}
+
 .icon-1x1-xsmall {
   display: flex;
   width: 1rem;
   height: 1rem;
+  margin-left: auto;
+  justify-content: flex-end;
+  align-items: center;
   aspect-ratio: 1/1;
 }
 

@@ -11,7 +11,7 @@
     "cf-typegen": "wrangler types",
     "db:generate": "drizzle-kit generate",
     "db:apply:local": "wrangler d1 migrations apply DB --local",
-    "cleanup": "rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache /root/.local /app/lost+found/* /app/dist 2>/dev/null || true && echo 'Cleanup complete!' && df -h / | tail -1"
+    "build:docs": "node ./scripts/build-master-doc.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "12.6.7",
@@ -76,9 +76,9 @@
     "@astrojs/check": "0.9.4",
     "@cloudflare/workers-types": "4.20250726.0",
     "@types/turndown": "5.0.6",
-    "@webflow/data-types": "1.0.2",
-    "@webflow/react": "1.0.2",
-    "@webflow/webflow-cli": "1.8.49",
+    "@webflow/data-types": "1.0.4",
+    "@webflow/react": "1.0.4",
+    "@webflow/webflow-cli": "1.8.51",
     "drizzle-kit": "0.31.7",
     "kill-port": "2.0.1",
     "tw-animate-css": "1.3.6",

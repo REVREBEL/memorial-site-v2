@@ -2,15 +2,11 @@
 import MainLayout from '../layouts/main.astro';
 import { NavigationWrapper } from '../components/NavigationWrapper';
 import { FooterWrapper } from '../components/FooterWrapper';
-import { GuestBookWrapper } from '../components/GuestBookWrapper';
+import { GuestBook } from '../components/GuestBook';
 ---
 
 <MainLayout>
-  <div style="background-color: var(--background); min-height: 100vh;">
-    <NavigationWrapper client:only="react" />
-    
-    <GuestBookWrapper client:only="react" />
-    
-    <FooterWrapper client:only="react" />
-  </div>
+  <NavigationWrapper client:load />
+  <GuestBook client:only="react" />
+  <FooterWrapper client:load />
 </MainLayout>

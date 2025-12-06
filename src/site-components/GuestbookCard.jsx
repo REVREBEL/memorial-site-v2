@@ -67,8 +67,76 @@ export function GuestbookCard(
         "Rose Clay": "w-variant-f870ba70-a76c-b3e4-5bee-5dfd8572c825"
     };
 
-    const _activeStyleVariant = _styleVariantMap[mainComponentColorVariant];
+export function GuestbookCard({
+  as: _Component = _Builtin.Block,
+  mainComponentId,
+  mainComponentVisibility = true,
+  mainComponentColorVariant = "Warm Sandston",
+  guestbookDateId,
+  guestbookDateRuntimeProps = {},
+  guestbookDateDateLabel = "Added On",
+  guestbookDateGuestbookDate = <br />,
+  nameFullName = "first name last name",
+  locationVisibility = true,
+  locationIconVisibility = true,
+  locationId,
+  locationRuntimeProps = {},
+  viewMessageButtonVisibility = true,
+  viewMessageButtonArrowIconVisibility = true,
+  viewMessageButtonButtonText = (
+    <>
+      {"View Message"}
+      <br />
+    </>
+  ),
+  viewMessageButtonSlot,
+  viewMessageButtonRuntimeProps = {},
+  tag1Visibility = true,
+  tag1Id,
+  tag1Text = "work event",
+  tag2Visibility = true,
+  tag2Id,
+  tag2Text = "co-worker",
+  tag2Tag2Slot,
+  tag2RuntimeProps = {},
+  locationLocationText = (
+    <>
+      {"Boulder, CO"}
+      <br />
+    </>
+  ),
+  messageCardRuntimeProps = {},
+  messageCardMessageCardSlot,
+  howWeMetHowWeMetText = "We met a Omni Financial",
+  howWeMetHowWeMetSlot,
+  howWeMetRuntimeProps = {},
+  messageVisibility = true,
+  messageMessageHeading = (
+    <>
+      {"message"}
+      <br />
+    </>
+  ),
+  messageMessageText = "You' be missed. I'll always remember your warm smile",
+  messageMessageSlot,
+  messageRuntimeProps = {},
+  cardDetailsButtonButtonText = "view card details",
+  cardDetailsButtonCardDetailButtonSlot,
+  cardDetailsButtonRuntimeProps = {},
+  messageHeadingText = "message",
+  tag1Tag1Slot,
+  tag1RuntimeProps = {},
+  howWeMetVisibility = true,
+  howWeMetHeadingText = (
+    <>
+      {"how we met"}
+      <br />
+    </>
+  ),
+}) {
+  _interactions.useInteractions(_interactionsData, _styles);
 
+<<<<<<< HEAD
     return mainComponentVisibility ? <_Component
         className={`component-guestbook-card component_guesbook-card ${_activeStyleVariant}`}
         id="w-node-_72a65641-083c-d3d7-a5f1-54689110319e-9110319e"
@@ -121,3 +189,387 @@ export function GuestbookCard(
                     tag="div"
                     {...cardDetailsButtonRuntimeProps}>{cardDetailsButtonCardDetailButtonSlot ?? cardDetailsButtonButtonText}</_Builtin.Block></>}</_Builtin.Block></_Component> : null;
 }
+=======
+  const _styleVariantMap = {
+    "Warm Sandston": "",
+    "Slate Navy": "w-variant-db85ccea-8578-785e-3cac-50eea47c37cb",
+    "Slate Blue": "w-variant-acd405c7-f8cf-c479-8d20-4182289c84fc",
+    "Ocean Teal": "w-variant-3d29cd7f-708c-35e7-f839-44ba41e87c40",
+    "Rustwood Red": "w-variant-1382dac3-79bd-15c9-48bb-2fad64084561",
+    "Rose Clay": "w-variant-f870ba70-a76c-b3e4-5bee-5dfd8572c825",
+  };
+
+  const _activeStyleVariant = _styleVariantMap[mainComponentColorVariant];
+
+  return mainComponentVisibility ? (
+    <_Component
+      className={_utils.cx(
+        _styles,
+        "component-guestbook-card",
+        "component_guesbook-card",
+        _activeStyleVariant
+      )}
+      id={_utils.cx(
+        _styles,
+        "w-node-_72a65641-083c-d3d7-a5f1-54689110319e-9110319e"
+      )}
+      data-w-id="72a65641-083c-d3d7-a5f1-54689110319e"
+      tag="div"
+    >
+      <_Builtin.Block
+        className={_utils.cx(
+          _styles,
+          "background_color-variant",
+          _activeStyleVariant
+        )}
+        tag="div"
+      >
+        <_Builtin.Block
+          className={_utils.cx(
+            _styles,
+            "guestbook_top-section",
+            _activeStyleVariant
+          )}
+          tag="div"
+        >
+          <_Builtin.Block
+            className={_utils.cx(
+              _styles,
+              "guestbook_card-wrapper",
+              _activeStyleVariant
+            )}
+            tag="div"
+          >
+            <_Builtin.Block
+              className={_utils.cx(
+                _styles,
+                "guestbook_date_wrapper",
+                _activeStyleVariant
+              )}
+              tag="div"
+              id={guestbookDateId}
+            >
+              <_Builtin.Block
+                className={_utils.cx(
+                  _styles,
+                  "guestbook_date-label",
+                  _activeStyleVariant
+                )}
+                tag="div"
+              >
+                {guestbookDateDateLabel}
+              </_Builtin.Block>
+              <_Builtin.Block
+                className={_utils.cx(
+                  _styles,
+                  "guestbook_date",
+                  _activeStyleVariant
+                )}
+                tag="div"
+                {...guestbookDateRuntimeProps}
+              >
+                {guestbookDateGuestbookDate}
+              </_Builtin.Block>
+            </_Builtin.Block>
+            <_Builtin.Block
+              className={_utils.cx(
+                _styles,
+                "guestbook_name-wrapper",
+                _activeStyleVariant
+              )}
+              tag="div"
+            >
+              <_Builtin.Heading
+                className={_utils.cx(
+                  _styles,
+                  "guestbook_name",
+                  _activeStyleVariant
+                )}
+                tag="h3"
+              >
+                {nameFullName}
+              </_Builtin.Heading>
+              <_Builtin.Block
+                className={_utils.cx(
+                  _styles,
+                  "guestbook_item-wrapper",
+                  _activeStyleVariant
+                )}
+                tag="div"
+              >
+                {locationVisibility ? (
+                  <_Builtin.Block
+                    className={_utils.cx(
+                      _styles,
+                      "guestbook_location",
+                      _activeStyleVariant
+                    )}
+                    tag="div"
+                    id={locationId}
+                  >
+                    <_Builtin.Block
+                      className={_utils.cx(
+                        _styles,
+                        "guestbook_location-item",
+                        _activeStyleVariant
+                      )}
+                      tag="div"
+                    >
+                      {locationIconVisibility ? (
+                        <_Builtin.HtmlEmbed
+                          className={_utils.cx(
+                            _styles,
+                            "icon",
+                            "location-icon",
+                            _activeStyleVariant
+                          )}
+                          value="%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20width%3D%2224px%22%20height%3D%2224px%22%20stroke-width%3D%221.5%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20color%3D%22currentColor%22%3E%3Cpath%20d%3D%22M20%2010C20%2014.4183%2012%2022%2012%2022C12%2022%204%2014.4183%204%2010C4%205.58172%207.58172%202%2012%202C16.4183%202%2020%205.58172%2020%2010Z%22%20stroke%3D%22currentColor%22%20stroke-width%3D%221.5%22%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M12%2011C12.5523%2011%2013%2010.5523%2013%2010C13%209.44772%2012.5523%209%2012%209C11.4477%209%2011%209.44772%2011%2010C11%2010.5523%2011.4477%2011%2012%2011Z%22%20fill%3D%22currentColor%22%20stroke%3D%22currentColor%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"
+                        />
+                      ) : null}
+                      <_Builtin.Block
+                        className={_utils.cx(
+                          _styles,
+                          "guesbook_location",
+                          "component_color",
+                          _activeStyleVariant
+                        )}
+                        tag="div"
+                        {...locationRuntimeProps}
+                      >
+                        {locationLocationText}
+                      </_Builtin.Block>
+                    </_Builtin.Block>
+                  </_Builtin.Block>
+                ) : null}
+                {viewMessageButtonVisibility ? (
+                  <_Builtin.Block
+                    className={_utils.cx(
+                      _styles,
+                      "guestbook_view-message",
+                      _activeStyleVariant
+                    )}
+                    tag="div"
+                  >
+                    <_Builtin.Block
+                      className={_utils.cx(
+                        _styles,
+                        "guestbook_message-item",
+                        _activeStyleVariant
+                      )}
+                      tag="div"
+                    >
+                      <_Builtin.Block
+                        className={_utils.cx(
+                          _styles,
+                          "guesbook_view-message",
+                          _activeStyleVariant
+                        )}
+                        tag="div"
+                        {...viewMessageButtonRuntimeProps}
+                      >
+                        {viewMessageButtonSlot ?? viewMessageButtonButtonText}
+                      </_Builtin.Block>
+                      {viewMessageButtonArrowIconVisibility ? (
+                        <_Builtin.HtmlEmbed
+                          className={_utils.cx(
+                            _styles,
+                            "icon",
+                            "arrow-icon",
+                            _activeStyleVariant
+                          )}
+                          value="%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20width%3D%2224px%22%20height%3D%2224px%22%20stroke-width%3D%221.5%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20color%3D%22currentColor%22%3E%3Cpath%20d%3D%22M8%2012H16M16%2012L12.5%208.5M16%2012L12.5%2015.5%22%20stroke%3D%22currentColor%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M12%2022C17.5228%2022%2022%2017.5228%2022%2012C22%206.47715%2017.5228%202%2012%202C6.47715%202%202%206.47715%202%2012C2%2017.5228%206.47715%2022%2012%2022Z%22%20stroke%3D%22currentColor%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"
+                        />
+                      ) : null}
+                    </_Builtin.Block>
+                  </_Builtin.Block>
+                ) : null}
+              </_Builtin.Block>
+            </_Builtin.Block>
+            <_Builtin.Block
+              className={_utils.cx(
+                _styles,
+                "guestroom_tags-wrapper",
+                _activeStyleVariant
+              )}
+              tag="div"
+            >
+              <_Builtin.Block
+                className={_utils.cx(
+                  _styles,
+                  "relationship-wrapper",
+                  _activeStyleVariant
+                )}
+                tag="div"
+              >
+                <_Builtin.Block
+                  className={_utils.cx(
+                    _styles,
+                    "guestbook_first-meeting",
+                    _activeStyleVariant
+                  )}
+                  tag="div"
+                >
+                  {"How You Knew Eachother"}
+                </_Builtin.Block>
+                <_Builtin.Block
+                  className={_utils.cx(
+                    _styles,
+                    "guestbook_buton-group-wrapper",
+                    _activeStyleVariant
+                  )}
+                  tag="div"
+                >
+                  <_Builtin.Block
+                    className={_utils.cx(
+                      _styles,
+                      "bg-color-compoent",
+                      _activeStyleVariant
+                    )}
+                    tag="div"
+                  >
+                    {tag1Tag1Slot ??
+                      (tag1Visibility ? (
+                        <_Builtin.Block
+                          className={_utils.cx(
+                            _styles,
+                            "guestbook_relationship-tag",
+                            _activeStyleVariant
+                          )}
+                          tag="div"
+                          id={tag1Id}
+                          {...tag1RuntimeProps}
+                        >
+                          {tag1Text}
+                        </_Builtin.Block>
+                      ) : null)}
+                  </_Builtin.Block>
+                  <_Builtin.Block
+                    className={_utils.cx(
+                      _styles,
+                      "bg-color-compoent",
+                      _activeStyleVariant
+                    )}
+                    tag="div"
+                  >
+                    {tag2Tag2Slot ??
+                      (tag2Visibility ? (
+                        <_Builtin.Block
+                          className={_utils.cx(
+                            _styles,
+                            "guestbook_relationship-tag",
+                            _activeStyleVariant
+                          )}
+                          tag="div"
+                          id={tag2Id}
+                          {...tag2RuntimeProps}
+                        >
+                          {tag2Text}
+                        </_Builtin.Block>
+                      ) : null)}
+                  </_Builtin.Block>
+                </_Builtin.Block>
+              </_Builtin.Block>
+            </_Builtin.Block>
+          </_Builtin.Block>
+        </_Builtin.Block>
+      </_Builtin.Block>
+      <_Builtin.Block
+        className={_utils.cx(
+          _styles,
+          "guestbook_message-card",
+          _activeStyleVariant
+        )}
+        data-w-id="3689d08e-4566-5cce-acd7-70fe0543160f"
+        tag="div"
+        {...messageCardRuntimeProps}
+      >
+        {messageCardMessageCardSlot ?? (
+          <>
+            {messageVisibility ? (
+              <_Builtin.Block
+                className={_utils.cj(
+                  _utils.cx(
+                    _styles,
+                    "guestbook_message-wrapper",
+                    _activeStyleVariant
+                  ),
+                  "w-clearfix"
+                )}
+                tag="div"
+              >
+                <_Builtin.Paragraph
+                  className={_utils.cx(
+                    _styles,
+                    "guestbook_message-headline",
+                    _activeStyleVariant
+                  )}
+                >
+                  {howWeMetHeadingText}
+                </_Builtin.Paragraph>
+                <_Builtin.Block
+                  className={_utils.cx(
+                    _styles,
+                    "guestbook_message-text",
+                    _activeStyleVariant
+                  )}
+                  tag="div"
+                  {...howWeMetRuntimeProps}
+                >
+                  {howWeMetHowWeMetSlot ?? howWeMetHowWeMetText}
+                </_Builtin.Block>
+              </_Builtin.Block>
+            ) : null}
+            {howWeMetVisibility ? (
+              <_Builtin.Block
+                className={_utils.cj(
+                  _utils.cx(
+                    _styles,
+                    "guestbook_message-wrapper",
+                    _activeStyleVariant
+                  ),
+                  "w-clearfix"
+                )}
+                tag="div"
+              >
+                <_Builtin.Paragraph
+                  className={_utils.cx(
+                    _styles,
+                    "guestbook_message-headline",
+                    _activeStyleVariant
+                  )}
+                >
+                  {messageHeadingText}
+                </_Builtin.Paragraph>
+                <_Builtin.Block
+                  className={_utils.cx(
+                    _styles,
+                    "guestbook_message-text",
+                    _activeStyleVariant
+                  )}
+                  tag="div"
+                  {...messageRuntimeProps}
+                >
+                  {messageMessageSlot ?? messageMessageText}
+                </_Builtin.Block>
+              </_Builtin.Block>
+            ) : null}
+            <_Builtin.Block
+              className={_utils.cx(
+                _styles,
+                "guesttbook_button-view-detail",
+                "tag",
+                _activeStyleVariant
+              )}
+              tag="div"
+              {...cardDetailsButtonRuntimeProps}
+            >
+              {cardDetailsButtonCardDetailButtonSlot ??
+                cardDetailsButtonButtonText}
+            </_Builtin.Block>
+          </>
+        )}
+      </_Builtin.Block>
+    </_Component>
+  ) : null;
+}
+>>>>>>> main

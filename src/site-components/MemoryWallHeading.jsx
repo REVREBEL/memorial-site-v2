@@ -3,19 +3,20 @@ import React from "react";
 import * as _Builtin from "./_Builtin";
 import { ButtonFilled } from "./ButtonFilled";
 import { FilterTagsSlots } from "./FilterTagsSlots";
+import * as _utils from "./utils";
+import _styles from "./MemoryWallHeading.module.css";
 
-export function MemoryWallHeading(
-    {
-        as: _Component = _Builtin.Block,
-        tag = "h1",
-        title = "emory Wall",
-        buttonFilledButtonText = "Share a memory",
-        buttonFilledVariant = null,
-        buttonFilledButtonId,
+export function MemoryWallHeading({
+  as: _Component = _Builtin.Block,
+  tag = "h1",
+  title = "emory Wall",
+  buttonFilledButtonText = "Share a memory",
+  buttonFilledVariant = null,
+  buttonFilledButtonId,
 
-        buttonFilledButtonLink = {
-            href: "#"
-        },
+  buttonFilledButtonLink = {
+    href: "#",
+  },
 
         tag1Variant = null,
         tag2Text = "Tag Label",
