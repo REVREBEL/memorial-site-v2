@@ -36,7 +36,7 @@
 --color-primary: var(--primary);
 --color-popover-foreground: var(--popover-foreground);
 --color-popover: var(--popover);
---card-foreground: var(--card-foreground);
+--color-card-foreground: var(--card-foreground);
 --color-card: var(--card);
 --radius-sm: calc(var(--radius) - 4px);
 --radius-md: calc(var(--radius) - 2px);
@@ -223,6 +223,13 @@ position: fixed !important;
 z-index: 999999 !important;
 }
 
+/* FORCE WIDE DIALOG for memory form */
+[data-slot="dialog-content"].wide-dialog,
+[data-radix-dialog-content].wide-dialog {
+width: 95vw !important;
+max-width: 1400px !important;
+}
+
 /* Ensure proper scrolling for dialog content */
 [data-slot="dialog-content"],
 [data-radix-dialog-content] {
@@ -236,145 +243,8 @@ body:has([data-state="open"][data-radix-dialog-content]) {
 overflow: hidden;
 }
 
-/* SPECIFIC STYLES FOR MEMORY FORM DIALOG */
-[data-slot="dialog-content"].memory-form-dialog,
-[data-radix-dialog-content].memory-form-dialog {
-width: 95vw !important;
-max-width: 1400px !important;
-height: auto !important;
-max-height: 92vh !important;
-padding: 2rem !important;
-}
-
-/* Make sure the form grid stretches properly */
-.memory-form-dialog form {
-display: flex;
-flex-direction: column;
-min-height: 600px;
-}
-
 /* Center section headings */
 .memory-wall-header,
 .section-header {
 text-align: center;
-}
-
-/* ============================================
-CRITICAL FIX: Override Webflow's .grid class
-============================================
-The auto-generated Webflow CSS includes a .grid class
-with fixed 200px dimensions that breaks our form layout.
-This override ensures proper flexbox behavior.
-*/
-.grid {
-grid-auto-columns: auto !important;
-grid-auto-rows: auto !important;
-grid-template-columns: none !important;
-grid-template-rows: none !important;
-}
-
-/* More specific override for dialog content grid */
-[data-slot="dialog-content"] .grid,
-[data-radix-dialog-content] .grid {
-display: grid !important;
-grid-auto-columns: 1fr !important;
-grid-auto-rows: auto !important;
-grid-template-columns: unset !important;
-grid-template-rows: unset !important;
-}
-
-/* ============================================
-FIX: Stories component hardcoded image widths
-============================================
-Override the hardcoded widths in Webflow's Stories CSS
-to make images responsive. Using multiple selectors to
-ensure override works across all contexts.
-*/
-
-/* Target all image-ratio_1x1 elements */
-img.image-ratio_1x1,
-.image-ratio_1x1 img,
-.image-ratio_1x1 {
-width: 100% !important;
-max-width: 100% !important;
-height: auto !important;
-}
-
-/* Target the specific compound class that Webflow uses */
-.image-ratio_1x1.position_relative.flex_horizontal.is-y-top.radius_all-0,
-.image-ratio_1x1.position_relative.flex_horizontal.is-y-top.radius_all-0 img {
-width: 100% !important;
-max-width: 100% !important;
-}
-
-/* Override any inline styles or generated CSS */
-[class*="image-ratio_1x1"] {
-width: 100% !important;
-max-width: 100% !important;
-}
-
-/* Make sure images inside story cards are responsive */
-.content-block-link img,
-.content-block-link .image-ratio_1x1 {
-width: 100% !important;
-max-width: 100% !important;
-height: auto !important;
-}
-
-/* ============================================
-FIX: Memory Card Flip Interaction
-============================================
-The Webflow flip is triggered by clicking elements with 
-specific classes. Make sure those elements are clickable.
-*/
-
-/* Make the entire card area clickable */
-.component-color-variant {
-cursor: pointer !important;
-}
-
-/* Make sure the "READ MORE" button triggers the flip */
-.details-link.tag {
-pointer-events: all !important;
-cursor: pointer !important;
-z-index: 50 !important;
-}
-
-/* Ensure the date badge that moves/rotates is clickable */
-.memory-wall_top-date.date-tag {
-pointer-events: all !important;
-cursor: pointer !important;
-}
-
-/* Front content layer - should not block clicks to card */
-.memory-wall_top-content {
-pointer-events: none !important;
-}
-
-/* But elements inside should be clickable */
-.memory-wall_top-content * {
-pointer-events: all !important;
-}
-
-/* Back content should be above when visible */
-.memory-wall_botom-content.is-primary {
-pointer-events: none !important;
-transition: opacity 0.5s ease-in-out !important;
-}
-
-/* When flipped (opacity 1), allow interaction with back content */
-.memory-wall_botom-content.is-primary[style*="opacity: 1"] {
-pointer-events: all !important;
-}
-
-/* Image and overlay should not block the flip click */
-.memory-wall_image,
-.image-overlay,
-.color-card-2 {
-pointer-events: none !important;
-}
-
-/* Location wrapper should not block clicks */
-.location-wrapper {
-pointer-events: all !important;
 }

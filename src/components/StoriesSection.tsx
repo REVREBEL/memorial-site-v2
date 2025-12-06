@@ -29,8 +29,8 @@ export function StoriesSection() {
 
   const fetchMemories = async () => {
     try {
-      console.log('[StoriesSection] Fetching from:', `${baseUrl}/api/memory_journal`);
-      const response = await fetch(`${baseUrl}/api/memory_journal`);
+      console.log('[StoriesSection] Fetching from:', `${baseUrl}/api/memories`);
+      const response = await fetch(`${baseUrl}/api/memories`);
       console.log('[StoriesSection] Response status:', response.status);
       
       if (response.ok) {
