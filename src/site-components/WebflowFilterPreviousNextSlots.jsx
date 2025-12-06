@@ -6,18 +6,18 @@ import _styles from "./WebflowFilterPreviousNextSlots.module.css";
 
 export function WebflowFilterPreviousNextSlots({
   as: _Component = _Builtin.Block,
-  viewMoreViewMoreSlot,
-  viewMoreRuntimeProps = {},
   viewMoreSlotVisibility = true,
-  nextRuntimeProps = {},
-  nextNextPageSlot,
-  previousRuntimeProps = {},
-  previousFamilyTagSlot,
+  viewMoreViewMoreSlot,
+  viewMoreSlot2,
+  viewMoreRuntimeProps = {},
   nextSlotVisibility = true,
+  nextNextPageSlot,
+  nextSlot,
+  nextRuntimeProps = {},
   previousSlotVisibility = true,
-  slot,
-  slot,
-  slot,
+  previousPreviousPageSlot,
+  previousSlot,
+  previousRuntimeProps = {},
 }) {
   return (
     <_Component
@@ -35,21 +35,6 @@ export function WebflowFilterPreviousNextSlots({
         )}
         tag="div"
       >
-        {viewMoreSlotVisibility ? (
-          <_Builtin.Block tag="div" {...viewMoreRuntimeProps}>
-            {viewMoreViewMoreSlot}
-          </_Builtin.Block>
-        ) : null}
-        {nextSlotVisibility ? (
-          <_Builtin.Block tag="div" {...nextRuntimeProps}>
-            {nextNextPageSlot}
-          </_Builtin.Block>
-        ) : null}
-        {previousSlotVisibility ? (
-          <_Builtin.Block tag="div" {...previousRuntimeProps}>
-            {previousFamilyTagSlot}
-          </_Builtin.Block>
-        ) : null}
         <_Builtin.NotSupported _atom="Slot" />
         <_Builtin.NotSupported _atom="Slot" />
         <_Builtin.NotSupported _atom="Slot" />

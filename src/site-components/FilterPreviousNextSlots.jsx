@@ -6,15 +6,15 @@ import _styles from "./FilterPreviousNextSlots.module.css";
 
 export function FilterPreviousNextSlots({
   as: _Component = _Builtin.Block,
+  viewMoreSlotVisibility = true,
   viewMoreViewMoreSlot,
   viewMoreRuntimeProps = {},
-  viewMoreSlotVisibility = true,
-  nextRuntimeProps = {},
-  nextNextPageSlot,
-  previousRuntimeProps = {},
-  previousFamilyTagSlot,
   nextSlotVisibility = true,
+  nextNextSlot,
+  nextRuntimeProps = {},
   previousSlotVisibility = true,
+  previousPreviousSlot,
+  previousRuntimeProps = {},
 }) {
   return (
     <_Component
@@ -37,14 +37,14 @@ export function FilterPreviousNextSlots({
             {viewMoreViewMoreSlot}
           </_Builtin.Block>
         ) : null}
-        {nextSlotVisibility ? (
-          <_Builtin.Block tag="div" {...nextRuntimeProps}>
-            {nextNextPageSlot}
-          </_Builtin.Block>
-        ) : null}
         {previousSlotVisibility ? (
           <_Builtin.Block tag="div" {...previousRuntimeProps}>
-            {previousFamilyTagSlot}
+            {previousPreviousSlot}
+          </_Builtin.Block>
+        ) : null}
+        {nextSlotVisibility ? (
+          <_Builtin.Block tag="div" {...nextRuntimeProps}>
+            {nextNextSlot}
           </_Builtin.Block>
         ) : null}
       </_Builtin.Block>

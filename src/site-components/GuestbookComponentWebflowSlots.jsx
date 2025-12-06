@@ -63,9 +63,6 @@ export function GuestbookComponentWebflowSlots({
       tag="div"
       id={componentComponentId}
     >
-      <_Builtin.Block tag="div" {...guestbookMainHeadingRuntimeProps}>
-        {guestbookMainHeadingGuestbookMainHeadingSlot}
-      </_Builtin.Block>
       <_Builtin.NotSupported _atom="Slot" />
       <_Builtin.Block
         className={_utils.cx(_styles, "guestbook_form-wrapper")}
@@ -79,18 +76,6 @@ export function GuestbookComponentWebflowSlots({
           )}
           tag="section"
         >
-          <_Builtin.Block
-            tag="div"
-            {...leftContentBlockGuestbookSubHeadingRuntimeProps}
-          >
-            {leftContentBlockGuestbookSubHeadingSlot}
-          </_Builtin.Block>
-          <_Builtin.Block
-            tag="div"
-            {...leftContentBlockGuestbookCountRuntimeProps}
-          >
-            {leftContentBlockGuestbookCountSlot}
-          </_Builtin.Block>
           <_Builtin.NotSupported _atom="Slot" />
           <_Builtin.NotSupported _atom="Slot" />
         </_Builtin.Block>
@@ -106,9 +91,6 @@ export function GuestbookComponentWebflowSlots({
             className={_utils.cx(_styles, "guestbook_form-container")}
             tag="div"
           >
-            <_Builtin.Block tag="div" {...rightContentBlockRuntimeProps}>
-              {rightContentBlockGuestbookFormSlot}
-            </_Builtin.Block>
             <_Builtin.NotSupported _atom="Slot" />
           </_Builtin.Block>
         </_Builtin.Block>
@@ -124,9 +106,6 @@ export function GuestbookComponentWebflowSlots({
           className={_utils.cx(_styles, "guestbook_names-container")}
           tag="div"
         >
-          <_Builtin.Block tag="div" {...guestbookNameHeadingRuntimeProps}>
-            {guestbookNameHeadingGuestbookNameHeadingSlot}
-          </_Builtin.Block>
           <_Builtin.NotSupported _atom="Slot" />
         </_Builtin.Block>
         <_Builtin.Block
@@ -141,9 +120,6 @@ export function GuestbookComponentWebflowSlots({
               className={_utils.cx(_styles, "component_filter-tags")}
               tag="div"
             >
-              <_Builtin.Block tag="div" {...filterTagComponentRuntimeProps}>
-                {filterTagComponentFilterTagComponentSlot}
-              </_Builtin.Block>
               <FilterTagsWebflowSlots
                 slot={
                   <GuestbookFilterTag filterVariant="Family" text="family" />
@@ -163,33 +139,6 @@ export function GuestbookComponentWebflowSlots({
           }}
           tag="div"
         >
-          <_Builtin.Block tag="div" {...guestbookCard1RuntimeProps}>
-            {guestbookCard1GuestbookCardSlot}
-          </_Builtin.Block>
-          <_Builtin.Block tag="div" {...guestbookCard2RuntimeProps}>
-            {guestbookCard2GuestbookCardSlot}
-          </_Builtin.Block>
-          <_Builtin.Block tag="div" {...guestbookCard3RuntimeProps}>
-            {guestbookCard3GuestbookCardSlot}
-          </_Builtin.Block>
-          <_Builtin.Block tag="div" {...guestbookCard4RuntimeProps}>
-            {guestbookCard4GuestbookCardSlot}
-          </_Builtin.Block>
-          <_Builtin.Block tag="div" {...guestbookCard5RuntimeProps}>
-            {guestbookCard5GuestbookCardSlot}
-          </_Builtin.Block>
-          <_Builtin.Block tag="div" {...guestbookCard6RuntimeProps}>
-            {guestbookCard6GuestbookCardSlot}
-          </_Builtin.Block>
-          <_Builtin.Block tag="div" {...guestbookCard7RuntimeProps}>
-            {guestbookCard7GuestbookCardSlot}
-          </_Builtin.Block>
-          <_Builtin.Block tag="div" {...guestbookCard8RuntimeProps}>
-            {guestbookCard8GuestbookCardSlot}
-          </_Builtin.Block>
-          <_Builtin.Block tag="div" {...guestbookCard9RuntimeProps}>
-            {guestbookCard9GuestbookCardSlot}
-          </_Builtin.Block>
           <_Builtin.NotSupported _atom="Slot" />
           <_Builtin.NotSupported _atom="Slot" />
           <_Builtin.NotSupported _atom="Slot" />
@@ -204,11 +153,10 @@ export function GuestbookComponentWebflowSlots({
           className={_utils.cx(_styles, "filter-bar_padding")}
           tag="div"
         >
-          <_Builtin.Block tag="div" {...filterPreviousNextRuntimeProps}>
-            {filterPreviousNextFilterPreviousNextSlotsSlot}
-          </_Builtin.Block>
           <WebflowFilterPreviousNextSlots
-            slot={<ButtonNextPrevious buttonVariantType="Next" />}
+            viewMoreSlot2={<ButtonNextPrevious />}
+            previousSlot={<ButtonNextPrevious buttonVariantType="Previous" />}
+            nextSlot={<ButtonNextPrevious buttonVariantType="Next" />}
           />
         </_Builtin.Block>
       </_Builtin.Section>
