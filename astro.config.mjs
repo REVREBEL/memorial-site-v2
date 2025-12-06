@@ -45,7 +45,16 @@ function injectDevScript(options = {}) {
 
 // https://astro.build/config
 export default defineConfig({
-  base: '',
+  // CRITICAL: Use BASE_URL environment variable provided by Webflow Cloud
+  // In production, this will be something like "/memory-journal"
+  // In local dev, this will be empty string (root)
+  base: import.meta.env.BASE_URL || '',
+  
+  // Also configure assets to use the same base path
+  build: {
+    assetsPrefix: import.meta.env.BASE_URL || undefined,
+  },
+  
   output: 'server',
   devToolbar: {
     enabled: false,
@@ -87,5 +96,10 @@ export default defineConfig({
           }
         : undefined,
     },
+  },
+  security: {
+    // Disable CSRF origin checking for FormData submissions
+    // Cloudflare Workers provides its own security layer
+    checkOrigin: false,
   },
 });

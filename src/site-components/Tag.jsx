@@ -18,7 +18,7 @@ export function Tag(
         "Rustwood Red": "w-variant-1c32fe8d-3ed1-8447-a7ac-af0c67c57ff2",
         "Rose Clay": "w-variant-3d7c014e-b599-1bed-e36f-b08944e2791a",
         "Slate Navy": "w-variant-bd0e2718-84b0-337a-1973-f03ea3d8af42",
-        "Ocean Tea": "w-variant-293fd546-6b48-6b02-a945-8ba34dd29a32",
+        "Ocean Teal": "w-variant-293fd546-6b48-6b02-a945-8ba34dd29a32",
         "Warm Sandston Outline": "w-variant-c616048c-98d3-23b9-0c48-859fbbd595b8",
         "Rustwood Red Outline": "w-variant-c41e09ae-0036-41a5-e361-e15c35a98f43",
         "Rose Clay Outline": "w-variant-5a0229ea-6ac7-ada3-1053-85d92cc5888b",
