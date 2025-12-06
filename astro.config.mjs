@@ -43,12 +43,9 @@ function injectDevScript(options = {}) {
   };
 }
 
-const PRODUCTION_MOUNT_PATH = '/memory-journal';
-
 // https://astro.build/config
 export default defineConfig({
-  // Only use base path in production, not in dev
-  base: process.env.NODE_ENV === 'production' ? PRODUCTION_MOUNT_PATH : '/',
+  base: '',
   output: 'server',
   devToolbar: {
     enabled: false,
@@ -63,9 +60,6 @@ export default defineConfig({
       enabled: true,
     },
   }),
-  security: {
-    checkOrigin: false, // Disable CSRF protection to allow cross-origin form submissions
-  },
   integrations: [
     react(),
     injectDevScript({scriptPath: '/generated/dev-only.js'}),
