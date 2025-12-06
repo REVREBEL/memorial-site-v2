@@ -2,19 +2,13 @@
 import MainLayout from '../layouts/main.astro';
 import { NavigationWrapper } from '../components/NavigationWrapper';
 import { FooterWrapper } from '../components/FooterWrapper';
+import { StoriesSection } from '../components/StoriesSection';
 import { MemoryWall } from '../components/MemoryWall';
 ---
 
 <MainLayout>
-<div style="background-color: var(--background); min-height: 100vh;">
-<NavigationWrapper client:only="react" />
-
-<div style="padding: 2rem; text-align: center; background-color: var(--background); color: var(--foreground);">
-<h1 style="font-family: var(--heading-font); font-size: clamp(2.5rem, 5vw + 1rem, 7rem); margin-bottom: 1rem; line-height: 1.2;">Memory Journal</h1>
-<p style="font-family: var(--body-font); font-size: clamp(1rem, 2vw, 1.2rem); margin-bottom: 2rem;">Share your precious memories</p>
-</div>
-
-<MemoryWall client:only="react" />
-<FooterWrapper client:only="react" />
-</div>
+  <NavigationWrapper client:load />
+  <StoriesSection client:load />
+  <MemoryWall client:only="react" />
+  <FooterWrapper client:load />
 </MainLayout>

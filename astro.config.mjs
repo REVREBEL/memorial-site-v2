@@ -43,7 +43,6 @@ function injectDevScript(options = {}) {
   };
 }
 
-// Production path - matches the deployment path in Webflow Cloud
 const PRODUCTION_MOUNT_PATH = '/memory-journal';
 
 // https://astro.build/config
