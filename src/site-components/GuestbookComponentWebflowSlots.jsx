@@ -3,8 +3,6 @@ import React from "react";
 import * as _Builtin from "./_Builtin";
 import { FilterTagsWebflowSlots } from "./FilterTagsWebflowSlots";
 import { WebflowFilterPreviousNextSlots } from "./WebflowFilterPreviousNextSlots";
-import * as _utils from "./utils";
-import _styles from "./GuestbookComponentWebflowSlots.module.css";
 
 export function GuestbookComponentWebflowSlots({
   as: _Component = _Builtin.Block,
