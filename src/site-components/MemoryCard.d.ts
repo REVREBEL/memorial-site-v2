@@ -6,7 +6,7 @@ declare function MemoryCard(
         as?: React.ElementType;
         componentComponentVisibility?: Types.Visibility.VisibilityConditions;
         componentComponentId?: Types.Basic.IdTextInput;
-        componentComponentColorVariant?: "Primary" | "Secondary" | "Secondary Accet" | "Tertiary" | "Tertiary Accent";
+        componentComponentColorVariant?: "Warm Sandston" | "Rustwood Red" | "Rose Clay" | "Tertiary" | "Ocean Teal";
         componentComponentSizeVariant?: "1x1" | "2x3" | "3x2";
         topCardMemoryHeadlineTag?: Types.Basic.HeadingTag;
         topCardMemoryHeadlineText?: React.ReactNode;
@@ -19,7 +19,7 @@ declare function MemoryCard(
         backgroundImageMemoryCardImageAltText2?: Types.Basic.AltText;
         /** This is a div connected to the devlink component slot*/
         backgroundImageMemoryCardImageSlot?: Types.Devlink.Slot;
-        backgroundImageMemoryCardImageRuntimeProps2?: Types.Devlink.RuntimeProps;
+        backgroundImageMemoryCardImageRuntimeProps?: Types.Devlink.RuntimeProps;
         /** MMMM YYYY
         Month Year Displayed on Top & Bottom Cards*/
         memoryDateTopCardMemoryDateMmmmYyyy?: React.ReactNode;
@@ -62,5 +62,6 @@ declare function MemoryCard(
         memoryDateTopCardMetaCountTimeSlot?: Types.Devlink.Slot;
         /** {{X Days|Weeks|Months|Years Ago}}*/
         memoryDateTopCardMetaCountTimeRuntimeProps?: Types.Devlink.RuntimeProps;
+        backgroundImageDevLinkImageVisibility?: Types.Visibility.VisibilityConditions;
     }
 ): React.JSX.Element

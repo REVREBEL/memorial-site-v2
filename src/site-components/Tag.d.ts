@@ -6,7 +6,7 @@ declare function Tag(
         as?: React.ElementType;
         visibility?: Types.Visibility.VisibilityConditions;
         id?: Types.Basic.IdTextInput;
-        colorVariant?: "Clear" | "Primary" | "Tertiary" | "Secondary" | "Primary Outline" | "Primary Outline Accent" | "Tertiary Outline" | "Tertiary Outline Accent" | "Secondary Outline" | "Secondary Outline Accent";
+        colorVariant?: "Clear" | "Warm Sandston" | "Rustwood Red" | "Rose Clay" | "Slate Navy" | "Ocean Tea" | "Warm Sandston Outline" | "Rustwood Red Outline" | "Rose Clay Outline" | "Ocean Tea Outline" | "Slate Navy Outline" | "Ocean Teal Outline";
         text?: React.ReactNode;
         runtimeProps?: Types.Devlink.RuntimeProps;
     }
