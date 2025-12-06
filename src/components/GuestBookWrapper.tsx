@@ -284,33 +284,123 @@ export function GuestBookWrapper() {
         }
         filterTagsSlot={
           <FilterTagsSlots
-            filterTagSlot={
-              <>
+            tag1NewestTagSlot={
+              <GuestbookFilterTag
+                tagText="All"
+                tagRuntimeProps={{
+                  onClick: () => handleTagFilter(null),
+                  style: {
+                    opacity: selectedTag === null ? 1 : 0.6,
+                    cursor: 'pointer',
+                  },
+                }}
+              />
+            }
+            tag2FamilyTagSlot={
+              uniqueRelationships.includes('Family') ? (
                 <GuestbookFilterTag
-                  tagText="All"
+                  tagText="Family"
                   tagRuntimeProps={{
-                    onClick: () => handleTagFilter(null),
+                    onClick: () => handleTagFilter('Family'),
                     style: {
-                      opacity: selectedTag === null ? 1 : 0.6,
+                      opacity: selectedTag === 'Family' ? 1 : 0.6,
                       cursor: 'pointer',
                     },
                   }}
                 />
-                {uniqueRelationships.map((relationship) => (
-                  <GuestbookFilterTag
-                    key={relationship}
-                    tagText={relationship}
-                    tagRuntimeProps={{
-                      onClick: () => handleTagFilter(relationship),
-                      style: {
-                        opacity: selectedTag === relationship ? 1 : 0.6,
-                        cursor: 'pointer',
-                      },
-                    }}
-                  />
-                ))}
-              </>
+              ) : undefined
             }
+            tag2Visibility={uniqueRelationships.includes('Family') ? 'visible' : 'hidden'}
+            tag3RelativeTagSlot={
+              uniqueRelationships.includes('Relative') ? (
+                <GuestbookFilterTag
+                  tagText="Relative"
+                  tagRuntimeProps={{
+                    onClick: () => handleTagFilter('Relative'),
+                    style: {
+                      opacity: selectedTag === 'Relative' ? 1 : 0.6,
+                      cursor: 'pointer',
+                    },
+                  }}
+                />
+              ) : undefined
+            }
+            tag3Visibility={uniqueRelationships.includes('Relative') ? 'visible' : 'hidden'}
+            tag4FriendsTagSlot={
+              uniqueRelationships.includes('Friend') ? (
+                <GuestbookFilterTag
+                  tagText="Friend"
+                  tagRuntimeProps={{
+                    onClick: () => handleTagFilter('Friend'),
+                    style: {
+                      opacity: selectedTag === 'Friend' ? 1 : 0.6,
+                      cursor: 'pointer',
+                    },
+                  }}
+                />
+              ) : undefined
+            }
+            tag4Visibility={uniqueRelationships.includes('Friend') ? 'visible' : 'hidden'}
+            tag5CoWorkerTagSlot={
+              uniqueRelationships.includes('Co-Worker') ? (
+                <GuestbookFilterTag
+                  tagText="Co-Worker"
+                  tagRuntimeProps={{
+                    onClick: () => handleTagFilter('Co-Worker'),
+                    style: {
+                      opacity: selectedTag === 'Co-Worker' ? 1 : 0.6,
+                      cursor: 'pointer',
+                    },
+                  }}
+                />
+              ) : undefined
+            }
+            tag5Visibility={uniqueRelationships.includes('Co-Worker') ? 'visible' : 'hidden'}
+            tag6BusinessPartnerTagSlot={
+              uniqueRelationships.includes('Business Partner') ? (
+                <GuestbookFilterTag
+                  tagText="Business Partner"
+                  tagRuntimeProps={{
+                    onClick: () => handleTagFilter('Business Partner'),
+                    style: {
+                      opacity: selectedTag === 'Business Partner' ? 1 : 0.6,
+                      cursor: 'pointer',
+                    },
+                  }}
+                />
+              ) : undefined
+            }
+            tag6Visibility={uniqueRelationships.includes('Business Partner') ? 'visible' : 'hidden'}
+            tag7ChurchFriendSlot={
+              uniqueRelationships.includes('Church Friend') ? (
+                <GuestbookFilterTag
+                  tagText="Church Friend"
+                  tagRuntimeProps={{
+                    onClick: () => handleTagFilter('Church Friend'),
+                    style: {
+                      opacity: selectedTag === 'Church Friend' ? 1 : 0.6,
+                      cursor: 'pointer',
+                    },
+                  }}
+                />
+              ) : undefined
+            }
+            tag7Visibility={uniqueRelationships.includes('Church Friend') ? 'visible' : 'hidden'}
+            tag8NeverMetTagSlot={
+              uniqueRelationships.includes('Never Met') ? (
+                <GuestbookFilterTag
+                  tagText="Never Met"
+                  tagRuntimeProps={{
+                    onClick: () => handleTagFilter('Never Met'),
+                    style: {
+                      opacity: selectedTag === 'Never Met' ? 1 : 0.6,
+                      cursor: 'pointer',
+                    },
+                  }}
+                />
+              ) : undefined
+            }
+            tag8Visibility={uniqueRelationships.includes('Never Met') ? 'visible' : 'hidden'}
           />
         }
         guestbookCardSlot={
@@ -347,9 +437,21 @@ export function GuestBookWrapper() {
         filterPreviousNextSlot={
           totalPages > 1 ? (
             <FilterPreviousNextSlots
-              previousButtonSlot={
+              viewMoreViewMoreSlot={
+                <div style={{ 
+                  fontFamily: 'var(--body-font)', 
+                  fontSize: '1rem',
+                  color: 'var(--foreground)',
+                  textAlign: 'center'
+                }}>
+                  Page {currentPage} of {totalPages}
+                </div>
+              }
+              previousPreviousSlot={
                 <ButtonNextPrevious
-                  buttonText="Previous"
+                  buttonVariantType="Previous"
+                  previousPageButtonText="Previous"
+                  previousPageVisibility="visible"
                   buttonRuntimeProps={{
                     onClick: goToPreviousPage,
                     disabled: currentPage === 1,
@@ -360,9 +462,11 @@ export function GuestBookWrapper() {
                   }}
                 />
               }
-              nextButtonSlot={
+              nextNextSlot={
                 <ButtonNextPrevious
-                  buttonText="Next"
+                  buttonVariantType="Next"
+                  nextButtonText="Next"
+                  nextVisibility="visible"
                   buttonRuntimeProps={{
                     onClick: goToNextPage,
                     disabled: currentPage === totalPages,
@@ -373,7 +477,6 @@ export function GuestBookWrapper() {
                   }}
                 />
               }
-              currentPageText={`Page ${currentPage} of ${totalPages}`}
             />
           ) : null
         }
