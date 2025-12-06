@@ -1,7 +1,5 @@
 import * as React from "react";
 
-declare function GuestBook(
-    props: {
-        as?: React.ElementType;
-    }
-): React.JSX.Element
+declare function GuestBook(props: {
+  as?: React.ElementType;
+}): React.JSX.Element;

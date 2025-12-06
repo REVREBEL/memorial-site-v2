@@ -15,8 +15,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
 
     const formData = await request.formData();
-    // Check for both 'file' and 'media' field names
-    const file = (formData.get('file') || formData.get('media')) as File;
+    const file = formData.get('file') as File;
     
     console.log('📤 Upload details:');
     console.log('  File name:', file?.name);
@@ -73,7 +72,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     console.log('✅ File uploaded to R2:', filename);
 
-    // Return both 'key' and 'filename' for compatibility
+    // Return the public URL
     const url = `/api/media/${filename}`;
     
     console.log('🔗 Media URL:', url);
@@ -82,9 +81,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return new Response(
       JSON.stringify({ 
         url,
-        key: filename, // Add 'key' field for API compatibility
-        filename,
         type: file.type.startsWith('video/') ? 'video' : 'photo',
+        filename 
       }),
       { 
         status: 200,

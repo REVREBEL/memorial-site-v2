@@ -3,8 +3,6 @@ dist/
 
 # generated types
 .astro/
-.npmrc
-
 
 # dependencies
 node_modules/
@@ -28,5 +26,3 @@ pnpm-debug.log*
 # wrangler files
 .wrangler
 .dev.vars*
-
-lost+found/

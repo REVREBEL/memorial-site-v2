@@ -1,442 +1,481 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { baseUrl } from '../lib/base-url';
-import { DevLinkProvider } from '../site-components/DevLinkProvider';
-import { MemoryWallHeading } from '../site-components/MemoryWallHeading';
-import { MemoryCard1X1 } from '../site-components/MemoryCard1X1';
-import { MemoryFormWrapper } from './MemoryFormWrapper';
-import { Dialog, DialogContent, DialogTrigger } from './ui/dialog';
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardFooter, CardHeader } from './ui/card';
 import { Button } from './ui/button';
+import { Heart, X, Calendar, MapPin, Tag } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from './ui/dialog';
+import { MemoryForm } from './MemoryForm';
+import { baseUrl } from '../lib/base-url';
 
-// Database response format (snake_case)
-interface MemoryAPI {
-  id: string;
-  headline: string;
-  memory: string;
-  name: string;
-  email?: string | null;
-  media_key?: string | null;
-  media_type?: string | null;
-  tags?: string[];
-  created_at: string;
-  memory_date?: string | null;
-  location?: string | null;
-}
-
-// Internal format (camelCase)
 interface Memory {
   id: string;
   headline: string;
-  memory: string;
   name: string;
-  email?: string | null;
-  mediaKey?: string | null;
-  mediaType?: string | null;
-  tags?: string[];
-  createdAt: string;
-  memoryDate?: string | null;
-  location?: string | null;
+  email: string;
+  photo?: string;
+  video?: string;
+  memory: string;
+  memoryDate?: string;
+  memoryLocation?: string;
+  tags: string[];
   likes: number;
+  createdAt: string;
 }
-
-const LAYOUT_PATTERNS = [
-  { variant: '1x1', color: 'Primary' },
-  { variant: '2x3', color: 'Secondary' },
-  { variant: '1x1', color: 'Tertiary' },
-  { variant: '3x2', color: 'Primary' },
-  { variant: '1x1', color: 'Secondary Accet' },
-  { variant: '2x3', color: 'Tertiary Accent' },
-  { variant: '1x1', color: 'Primary' },
-  { variant: '3x2', color: 'Secondary' },
-] as const;
 
 export function MemoryWall() {
   const [memories, setMemories] = useState<Memory[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [activeTag, setActiveTag] = useState<string>('All');
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null);
+  const [likedMemories, setLikedMemories] = useState<Set<string>>(new Set());
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [fetchError, setFetchError] = useState('');
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
+  // Get unique tags from all memories
+  const allTags = Array.from(new Set(memories.flatMap(m => m.tags))).sort();
 
   useEffect(() => {
     fetchMemories();
+    // Load liked memories from localStorage
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('likedMemories');
+      if (stored) {
+        try {
+          setLikedMemories(new Set(JSON.parse(stored)));
+        } catch (e) {
+          console.error('Failed to parse liked memories:', e);
+        }
+      }
+    }
   }, []);
-
-  // Convert API response to internal format
-  const convertMemory = (apiMemory: MemoryAPI): Memory => ({
-    id: apiMemory.id,
-    headline: apiMemory.headline,
-    memory: apiMemory.memory,
-    name: apiMemory.name,
-    email: apiMemory.email,
-    mediaKey: apiMemory.media_key,
-    mediaType: apiMemory.media_type,
-    tags: apiMemory.tags || [],
-    createdAt: apiMemory.created_at,
-    memoryDate: apiMemory.memory_date,
-    location: apiMemory.location,
-    likes: 0, // TODO: Fetch likes from likes table
-  });
 
   const fetchMemories = async () => {
+    console.log('🔄 [MemoryWall] Fetching memories...');
+    setFetchError('');
     try {
-      console.log('🔄 [MemoryWall] Fetching memories from:', `${baseUrl}/api/memory_journal`);
-      const response = await fetch(`${baseUrl}/api/memory_journal`);
+      const response = await fetch(`${baseUrl}/api/memories`);
+      console.log('📡 [MemoryWall] Response status:', response.status);
       
       if (!response.ok) {
-        console.error('❌ [MemoryWall] Failed to fetch:', response.status, response.statusText);
-        throw new Error(`Failed to fetch memories: ${response.statusText}`);
+        const errorData = await response.json().catch(() => null) as { error?: string; details?: string } | null;
+        throw new Error(errorData?.details || errorData?.error || `Failed to fetch memories: ${response.status}`);
       }
       
-      const data = await response.json() as MemoryAPI[];
-      console.log('✅ [MemoryWall] Fetched memories:', data.length, 'items');
+      const data = await response.json() as Memory[];
+      console.log('📦 [MemoryWall] Raw data received:', data.length, 'items');
       
-      const converted = Array.isArray(data) ? data.map(convertMemory) : [];
-      setMemories(converted);
-    } catch (err) {
-      console.error('❌ [MemoryWall] Error fetching memories:', err);
-      setMemories([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleMemoryAdded = () => {
-    console.log('✅ [MemoryWall] Memory added, refreshing list');
-    setIsDialogOpen(false);
-    fetchMemories();
-  };
-
-  const handleCardClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const target = e.currentTarget;
-    const bottomContent = target.querySelector('.memory-wall_botom-content.is-primary') as HTMLElement;
-    const colorCard = target.querySelector('.color-card-2') as HTMLElement;
-    
-    if (bottomContent) {
-      const isFlipped = bottomContent.style.opacity === '1';
-      
-      if (isFlipped) {
-        bottomContent.style.opacity = '0';
-        if (colorCard) colorCard.style.opacity = '1';
-      } else {
-        bottomContent.style.opacity = '1';
-        if (colorCard) colorCard.style.opacity = '0';
-      }
-    }
-  }, []);
-
-  // Get unique tags from all memories
-  const allTags = Array.from(
-    new Set(
-      memories.flatMap(m => m.tags || [])
-    )
-  ).sort();
-
-  // Filter memories based on active tag
-  const filteredMemories = activeTag === 'All'
-    ? memories
-    : memories.filter(m => m.tags?.includes(activeTag));
-
-  const getMediaUrl = (memory: Memory) => {
-    if (!memory.mediaKey) {
-      return undefined;
-    }
-    return `${baseUrl}/api/media/${memory.mediaKey}`;
-  };
-
-  // Format date as "Month Year" for the top date component
-  const formatMonthYear = (dateString?: string | null) => {
-    if (!dateString) return '';
-    try {
-      const date = new Date(dateString);
-      if (isNaN(date.getTime())) return '';
-      return date.toLocaleDateString('en-US', { 
-        month: 'long', 
-        year: 'numeric' 
+      // Map backend fields to frontend fields
+      const formattedData = data.map((item: any) => {
+        const photoUrl = item.mediaType === 'photo' && item.mediaKey ? `${baseUrl}/api/media/${item.mediaKey}` : undefined;
+        const videoUrl = item.mediaType === 'video' && item.mediaKey ? `${baseUrl}/api/media/${item.mediaKey}` : undefined;
+        
+        console.log(`🖼️ [MemoryWall] Memory ${item.id}:`, {
+          headline: item.headline,
+          mediaType: item.mediaType,
+          mediaKey: item.mediaKey,
+          photoUrl,
+          videoUrl
+        });
+        
+        return {
+          id: item.id,
+          headline: item.headline,
+          name: item.name,
+          email: item.email,
+          photo: photoUrl,
+          video: videoUrl,
+          memory: item.memory,
+          memoryDate: item.memoryDate,
+          memoryLocation: item.location,
+          tags: item.tags,
+          likes: item.likes,
+          createdAt: item.createdAt,
+        };
       });
-    } catch {
-      return '';
+      
+      console.log('✅ [MemoryWall] Formatted memories:', formattedData.length, 'items');
+      setMemories(Array.isArray(formattedData) ? formattedData : []);
+    } catch (error) {
+      console.error('❌ [MemoryWall] Failed to fetch memories:', error);
+      setFetchError(error instanceof Error ? error.message : 'Failed to load memories');
     }
   };
 
-  // Format relative time for the bottom indicator
-  const getTimeAgo = (dateString: string) => {
+  const handleLike = async (memoryId: string) => {
     try {
-      const date = new Date(dateString);
-      if (isNaN(date.getTime())) return 'Recently';
-      
-      const now = new Date();
-      const diffInMs = now.getTime() - date.getTime();
-      const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-      
-      if (diffInDays === 0) return 'Today';
-      if (diffInDays === 1) return '1 day ago';
-      if (diffInDays < 30) return `${diffInDays} days ago`;
-      if (diffInDays < 365) {
-        const months = Math.floor(diffInDays / 30);
-        return `${months} ${months === 1 ? 'month' : 'months'} ago`;
+      const response = await fetch(`${baseUrl}/api/memories/${memoryId}/like`, {
+        method: 'POST',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to like memory');
       }
-      const years = Math.floor(diffInDays / 365);
-      return `${years} ${years === 1 ? 'year' : 'years'} ago`;
-    } catch {
-      return 'Recently';
+
+      const updatedMemory = await response.json() as Memory;
+      
+      setMemories(prev =>
+        prev.map(m => m.id === memoryId ? { ...m, likes: updatedMemory.likes } : m)
+      );
+
+      setLikedMemories(prev => {
+        const newLiked = new Set(prev);
+        newLiked.add(memoryId);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('likedMemories', JSON.stringify(Array.from(newLiked)));
+        }
+        return newLiked;
+      });
+
+      if (selectedMemory?.id === memoryId) {
+        setSelectedMemory({ ...selectedMemory, likes: updatedMemory.likes });
+      }
+    } catch (error) {
+      console.error('Failed to like memory:', error);
     }
   };
 
-  const getLayoutPattern = (index: number) => {
-    return LAYOUT_PATTERNS[index % LAYOUT_PATTERNS.length];
+  const handleSubmit = async (formData: FormData) => {
+    console.log('📤 [MemoryWall] Submitting new memory...');
+    console.log('📤 [MemoryWall] FormData keys:', Array.from(formData.keys()));
+    console.log('📤 [MemoryWall] Target URL:', `${baseUrl}/api/memories`);
+    
+    try {
+      const response = await fetch(`${baseUrl}/api/memories`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      console.log('📡 [MemoryWall] Submit response status:', response.status);
+      console.log('📡 [MemoryWall] Submit response headers:', Object.fromEntries(response.headers.entries()));
+
+      // Try to get the response text first to see what we're dealing with
+      const responseText = await response.text();
+      console.log('📡 [MemoryWall] Raw response:', responseText.substring(0, 500));
+
+      if (!response.ok) {
+        let errorData: { error?: string; details?: string } | null = null;
+        
+        try {
+          errorData = JSON.parse(responseText);
+        } catch (parseError) {
+          console.error('❌ [MemoryWall] Failed to parse error response as JSON');
+          throw new Error(`Server error (${response.status}): ${responseText.substring(0, 200)}`);
+        }
+        
+        const errorMessage = errorData?.details || errorData?.error || `Failed to submit memory (${response.status})`;
+        console.error('❌ [MemoryWall] Server error:', errorMessage);
+        throw new Error(errorMessage);
+      }
+
+      console.log('✅ [MemoryWall] Memory submitted successfully');
+      await fetchMemories();
+      setShowAddForm(false);
+    } catch (error) {
+      console.error('❌ [MemoryWall] Failed to submit memory:', error);
+      console.error('❌ [MemoryWall] Error type:', error?.constructor?.name);
+      console.error('❌ [MemoryWall] Error details:', {
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined
+      });
+      throw error;
+    }
   };
 
-  // Handle tag clicks
-  const handleTagClick = (e: React.MouseEvent, tag: string) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setActiveTag(tag);
-  };
-
-  // Handle add memory button click
-  const handleAddMemoryClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDialogOpen(true);
-  };
-
-  if (loading) {
-    return (
-      <div style={{ 
-        padding: '4rem 2rem', 
-        textAlign: 'center',
-        fontFamily: 'var(--body-font)',
-        color: 'var(--foreground)',
-        backgroundColor: 'var(--background)'
-      }}>
-        Loading memories...
-      </div>
-    );
-  }
+  const filteredMemories = selectedTag
+    ? memories.filter(m => m.tags.includes(selectedTag))
+    : memories;
 
   return (
-    <DevLinkProvider>
-      <div style={{ 
-        backgroundColor: 'var(--background)',
-        padding: '3rem 1rem',
-        minHeight: '50vh'
-      }}>
-        <div style={{ 
-          maxWidth: '1400px', 
-          margin: '0 auto'
-        }}>
-          {/* Memory Wall Heading - Custom implementation */}
-          <div style={{ 
-            textAlign: 'center',
-            marginBottom: '3rem'
-          }}>
-            <h2 
-              style={{ 
-                fontFamily: 'var(--heading-font)',
-                fontSize: '2.5rem',
-                marginBottom: '2rem',
-                color: 'var(--foreground)'
-              }}
-            >
-              Share Your Memories
-            </h2>
-            
-            {/* Filter Tags */}
-            <div style={{ 
-              display: 'flex', 
-              gap: '0.75rem', 
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              marginBottom: '1.5rem'
-            }}>
-              <button
-                onClick={(e) => handleTagClick(e, 'All')}
-                style={{
-                  padding: '0.5rem 1rem',
-                  borderRadius: '1.5rem',
-                  border: activeTag === 'All' ? 'none' : '2px solid var(--primary)',
-                  backgroundColor: activeTag === 'All' ? 'var(--primary)' : 'transparent',
-                  color: activeTag === 'All' ? 'var(--primary-foreground)' : 'var(--primary)',
-                  fontFamily: 'var(--button-font)',
-                  fontSize: '0.875rem',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease'
-                }}
-              >
-                All
-              </button>
-              {allTags.slice(0, 5).map((tag) => (
-                <button
-                  key={tag}
-                  onClick={(e) => handleTagClick(e, tag)}
-                  style={{
-                    padding: '0.5rem 1rem',
-                    borderRadius: '1.5rem',
-                    border: activeTag === tag ? 'none' : '2px solid var(--primary)',
-                    backgroundColor: activeTag === tag ? 'var(--primary)' : 'transparent',
-                    color: activeTag === tag ? 'var(--primary-foreground)' : 'var(--primary)',
-                    fontFamily: 'var(--button-font)',
-                    fontSize: '0.875rem',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease'
-                  }}
-                >
-                  {tag}
-                </button>
-              ))}
-            </div>
-
-            {/* Add Memory Button */}
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <DialogTrigger asChild>
-                <Button 
-                  size="lg" 
-                  onClick={handleAddMemoryClick}
-                  style={{
-                    fontFamily: 'var(--button-font)',
-                    backgroundColor: 'var(--primary)',
-                    color: 'var(--primary-foreground)'
-                  }}
-                >
-                  Add Memory
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-                <MemoryFormWrapper onSuccess={handleMemoryAdded} />
-              </DialogContent>
-            </Dialog>
-          </div>
-
-          {/* Memory Cards Grid */}
-          <div 
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, 375px)',
-              gridAutoRows: '375px',
-              gap: '1.5rem',
-              marginTop: '3rem',
-              justifyContent: 'center'
-            }}
+    <div className="py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-heading font-bold mb-4">Memory Wall</h2>
+          <p className="text-lg text-muted-foreground mb-6">
+            Share your cherished memories, photos, and stories
+          </p>
+          <Button
+            onClick={() => setShowAddForm(true)}
+            size="lg"
+            className="font-button"
           >
-            {filteredMemories.map((memory, index) => {
-              const mediaUrl = getMediaUrl(memory);
-              const pattern = getLayoutPattern(index);
-              const hasImage = !!(mediaUrl && memory.mediaType === 'photo');
-              
-              let gridColumn = 'span 1';
-              let gridRow = 'span 1';
-              
-              if (pattern.variant === '3x2') {
-                gridColumn = 'span 2';
-                gridRow = 'span 1';
-              } else if (pattern.variant === '2x3') {
-                gridColumn = 'span 1';
-                gridRow = 'span 2';
-              }
-              
-              const monthYear = formatMonthYear(memory.memoryDate);
-              const timeAgo = getTimeAgo(memory.createdAt);
-              
-              console.log(`📇 [MemoryWall] Card ${index}:`, {
-                id: memory.id,
-                headline: memory.headline,
-                hasImage,
-                mediaUrl,
-                imageVisibilityProp: hasImage // FIXED: was !hasImage
-              });
-              
-              return (
-                <div
-                  key={memory.id}
-                  onClick={handleCardClick}
-                  style={{
-                    gridColumn,
-                    gridRow,
-                    cursor: 'pointer'
-                  }}
-                >
-                  <MemoryCard1X1
-                    componentSizeVariantCardSizeVariant={pattern.variant as any}
-                    optionsCardColorVariant={pattern.color as any}
-                    imageImage={mediaUrl}
-                    imageAltText={memory.headline}
-                    imageVisibility={hasImage} // FIXED: was !hasImage
-                    metaMemoryDate={monthYear || undefined}
-                    previewMemoryHeadline={memory.headline}
-                    previewMemoryHeadlineTag="h3"
-                    metaPostedByName={`Posted by ${memory.name}`}
-                    detailMemoryDetail={memory.memory}
-                    detailLikeIconVisibility={true}
-                    detailLocationText={memory.location || undefined}
-                    metaTimeIndicator={timeAgo}
-                  />
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Empty State */}
-          {filteredMemories.length === 0 && (
-            <div style={{
-              textAlign: 'center',
-              padding: '5rem 2rem',
-              fontFamily: 'var(--body-font)',
-              fontSize: '1.25rem',
-              color: 'var(--muted-foreground)'
-            }}>
-              <p>
-                {activeTag !== 'All' ? `No memories found with tag "${activeTag}"` : 'No memories yet. Be the first to share!'}
-              </p>
-              {memories.length === 0 && (
-                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                  <DialogTrigger asChild>
-                    <Button size="lg" className="mt-4">
-                      Add First Memory
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-                    <MemoryFormWrapper onSuccess={handleMemoryAdded} />
-                  </DialogContent>
-                </Dialog>
-              )}
-            </div>
-          )}
-          
-          {/* Debug Info */}
-          <div style={{ 
-            marginTop: '2rem', 
-            padding: '1rem', 
-            backgroundColor: 'rgba(0,0,0,0.05)',
-            fontSize: '0.875rem',
-            fontFamily: 'monospace'
-          }}>
-            <strong>Debug Info:</strong>
-            <br />Total Memories: {memories.length}
-            <br />Filtered Memories: {filteredMemories.length}
-            <br />Active Tag: {activeTag}
-            <br />All Tags: {allTags.join(', ') || 'none'}
-            <br />
-            <br />
-            <strong>Recent Memories with Media:</strong>
-            {memories.slice(0, 3).map((m, i) => {
-              const url = getMediaUrl(m);
-              const hasImg = !!(url && m.mediaType === 'photo');
-              return (
-                <div key={i} style={{ marginTop: '0.5rem', paddingLeft: '1rem' }}>
-                  {i + 1}. {m.headline} - Media: {m.mediaKey ? `✅ ${m.mediaKey}` : '❌ None'}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;Image URL: {url || '❌ No URL'}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;Has Image: {hasImg ? '✅ YES' : '❌ NO'}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;imageVisibility prop: {hasImg ? 'TRUE (should show image)' : 'FALSE (should hide image)'}
-                </div>
-              );
-            })}
-          </div>
+            Add Your Memory
+          </Button>
         </div>
+
+        {/* Error Message */}
+        {fetchError && (
+          <div className="max-w-2xl mx-auto mb-8 p-4 bg-destructive/10 border border-destructive rounded-md">
+            <p className="text-sm text-destructive">{fetchError}</p>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={fetchMemories}
+              className="mt-2"
+            >
+              Try Again
+            </Button>
+          </div>
+        )}
+
+        {/* Tag Filters */}
+        {allTags.length > 0 && (
+          <div className="mb-8 flex flex-wrap gap-2 justify-center">
+            <Button
+              variant={selectedTag === null ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setSelectedTag(null)}
+            >
+              All
+            </Button>
+            {allTags.map(tag => (
+              <Button
+                key={tag}
+                variant={selectedTag === tag ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setSelectedTag(tag)}
+              >
+                <Tag className="w-3 h-3 mr-1" />
+                {tag}
+              </Button>
+            ))}
+          </div>
+        )}
+
+        {/* Memory Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredMemories.map(memory => {
+            const hasMedia = memory.photo || memory.video;
+            
+            return (
+              <Card key={memory.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <div
+                  className="relative aspect-square bg-muted cursor-pointer"
+                  onClick={() => setSelectedMemory(memory)}
+                >
+                  {memory.photo && (
+                    <img
+                      src={memory.photo}
+                      alt={memory.headline}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                  {memory.video && (
+                    <div className="relative w-full h-full">
+                      <video
+                        src={memory.video}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                        <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center">
+                          <div className="w-0 h-0 border-l-8 border-t-4 border-b-4 border-l-primary border-t-transparent border-b-transparent ml-1" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {!hasMedia && (
+                    <div className="flex items-center justify-center h-full">
+                      <p className="text-muted-foreground text-sm">No media</p>
+                    </div>
+                  )}
+                </div>
+
+                <CardHeader>
+                  <h3 className="font-heading font-semibold text-xl">{memory.headline}</h3>
+                  <p className="text-sm text-muted-foreground">by {memory.name}</p>
+                </CardHeader>
+
+                <CardContent>
+                  <p className="text-sm line-clamp-3">{memory.memory}</p>
+                  
+                  {(memory.memoryDate || memory.memoryLocation) && (
+                    <div className="mt-3 space-y-1">
+                      {memory.memoryDate && (
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <Calendar className="w-3 h-3" />
+                          {memory.memoryDate}
+                        </div>
+                      )}
+                      {memory.memoryLocation && (
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <MapPin className="w-3 h-3" />
+                          {memory.memoryLocation}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {memory.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-3">
+                      {memory.tags.map(tag => (
+                        <span
+                          key={tag}
+                          className="text-xs px-2 py-1 bg-secondary text-secondary-foreground rounded-full"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+
+                <CardFooter className="flex justify-between items-center">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLike(memory.id);
+                    }}
+                    disabled={likedMemories.has(memory.id)}
+                    className="gap-2"
+                  >
+                    <Heart
+                      className={`w-4 h-4 ${
+                        likedMemories.has(memory.id) ? 'fill-red-500 text-red-500' : ''
+                      }`}
+                    />
+                    {memory.likes}
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSelectedMemory(memory)}
+                  >
+                    Read More
+                  </Button>
+                </CardFooter>
+              </Card>
+            );
+          })}
+        </div>
+
+        {filteredMemories.length === 0 && !fetchError && (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">
+              {selectedTag
+                ? `No memories found with tag "${selectedTag}"`
+                : 'No memories yet. Be the first to share!'}
+            </p>
+          </div>
+        )}
+
+        {/* Memory Detail Dialog */}
+        <Dialog open={!!selectedMemory} onOpenChange={(open) => !open && setSelectedMemory(null)}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            {selectedMemory && (
+              <>
+                <DialogHeader>
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <DialogTitle className="text-2xl font-heading mb-2">
+                        {selectedMemory.headline}
+                      </DialogTitle>
+                      <p className="text-sm text-muted-foreground">by {selectedMemory.name}</p>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setSelectedMemory(null)}
+                      className="flex-shrink-0"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </DialogHeader>
+
+                <div className="space-y-4">
+                  {selectedMemory.photo && (
+                    <img
+                      src={selectedMemory.photo}
+                      alt={selectedMemory.headline}
+                      className="w-full rounded-lg"
+                    />
+                  )}
+                  {selectedMemory.video && (
+                    <video
+                      src={selectedMemory.video}
+                      controls
+                      className="w-full rounded-lg"
+                    />
+                  )}
+
+                  {(selectedMemory.memoryDate || selectedMemory.memoryLocation) && (
+                    <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                      {selectedMemory.memoryDate && (
+                        <div className="flex items-center gap-2">
+                          <Calendar className="w-4 h-4" />
+                          {selectedMemory.memoryDate}
+                        </div>
+                      )}
+                      {selectedMemory.memoryLocation && (
+                        <div className="flex items-center gap-2">
+                          <MapPin className="w-4 h-4" />
+                          {selectedMemory.memoryLocation}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  <div className="prose prose-sm max-w-none">
+                    <p className="whitespace-pre-wrap">{selectedMemory.memory}</p>
+                  </div>
+
+                  {selectedMemory.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {selectedMemory.tags.map(tag => (
+                        <span
+                          key={tag}
+                          className="text-sm px-3 py-1 bg-secondary text-secondary-foreground rounded-full"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-between pt-4 border-t">
+                    <Button
+                      variant="ghost"
+                      onClick={() => handleLike(selectedMemory.id)}
+                      disabled={likedMemories.has(selectedMemory.id)}
+                      className="gap-2"
+                    >
+                      <Heart
+                        className={`w-5 h-5 ${
+                          likedMemories.has(selectedMemory.id)
+                            ? 'fill-red-500 text-red-500'
+                            : ''
+                        }`}
+                      />
+                      {selectedMemory.likes} {selectedMemory.likes === 1 ? 'Like' : 'Likes'}
+                    </Button>
+                  </div>
+                </div>
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
+
+        {/* Add Memory Dialog - EXTRA WIDE layout with forced width */}
+        <Dialog open={showAddForm} onOpenChange={setShowAddForm}>
+          <DialogContent 
+            className="wide-dialog w-[95vw] max-w-[1400px]"
+            style={{ width: '95vw', maxWidth: '1400px' }}
+          >
+            <DialogHeader className="pb-4">
+              <DialogTitle className="text-3xl font-heading mb-2">Share Your Memory</DialogTitle>
+              <p className="text-sm text-muted-foreground">
+                Fill out the form below to share your cherished memory with everyone
+              </p>
+            </DialogHeader>
+            <MemoryForm onSubmit={handleSubmit} />
+          </DialogContent>
+        </Dialog>
       </div>
-    </DevLinkProvider>
+    </div>
   );
 }

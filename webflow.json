@@ -1,27 +1,27 @@
 {
     "cloud": {
-        "framework": "astro",
-        "project_id": "b77d1674-85da-4324-8986-3e3bda668c2e"
+      "framework": "astro",
+      "project_id": "b77d1674-85da-4324-8986-3e3bda668c2e"
     },
     "devlink": {
-        "rootDir": "./src/site-components",
-        "cssModules": true,
-        "fileExtensions": {
-            "js": "jsx"
-        }
+      "rootDir": "./src/site-components",
+      "cssModules": true,
+      "fileExtensions": {
+        "js": "jsx"
+      }
     },
     "telemetry": {
-        "global": {
-            "allowTelemetry": true
-        }
+      "global": {
+        "allowTelemetry": true
+      }
     },
     "library": {
-        "components": [
-            "./src/components/**/*.webflow.@(js|jsx|mjs|ts|tsx)",
-            "./src/site-components/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
-        ],
-        "name": "Memorial-Library",
-        "description": "Memorial Component Library",
-        "id": "memorial-library"
+      "components": [
+        "./src/components/**/*.webflow.@(js|jsx|mjs|ts|tsx)",
+        "./src/site-components/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+      ],
+      "name": "Memorial-Library",
+      "description": "Memorial Component Library",
+      "id": "memorial-library"
     }
 }
