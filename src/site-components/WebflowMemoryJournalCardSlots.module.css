@@ -1,0 +1,212 @@
+.memory-journal_cards-section {
+  display: flex;
+  margin-top: 4rem;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+@media screen and (max-width: 479px) {
+  .memory-journal_cards-section {
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+}
+
+.memory-journal_card-section-padding {
+  display: flex;
+  margin-right: auto;
+  margin-left: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 767px) {
+  .memory-journal_card-section-padding {
+    overflow: hidden;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .memory-journal_card-section-padding {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+}
+
+.memory-journal_inner-form-container-copy {
+  display: flex;
+  width: 100%;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+}
+
+@media screen and (max-width: 479px) {
+  .memory-journal_inner-form-container-copy {
+    margin-right: 0.5rem;
+    margin-left: 0.35rem;
+  }
+}
+
+.memory-journal_card-component {
+  display: grid;
+  overflow: hidden;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-self: center;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(325px, auto);
+  grid-auto-rows: minmax(325px, auto);
+  grid-column-gap: 1rem;
+  grid-row-gap: 1rem;
+  grid-template-areas: ". Area-2 ."
+  ". Area-2 ."
+  "Area Area Area-4"
+  ". . Area-4"
+  ". Area-3 Area-3";
+  grid-template-columns: repeat(auto-fit, minmax(325px, auto)) minmax(325px, auto) minmax(325px, auto);
+  grid-template-rows: repeat(auto-fit, minmax(325px, auto)) minmax(325px, auto) minmax(325px, auto) minmax(325px, auto) minmax(325px, auto);
+}
+
+@media screen and (max-width: 991px) {
+  .memory-journal_card-component {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    align-self: stretch;
+    grid-template-areas: ". Area-2"
+    ". Area-2"
+    "Area Area"
+    ". Area-4"
+    ". Area-4"
+    ". Area-7"
+    "Area-5 Area-5"
+    "Area-6 Area-6"
+    ". ."
+    ". ."
+    ". .";
+    grid-template-columns: repeat(auto-fit, minmax(325px, auto));
+    grid-template-rows: repeat(auto-fit, minmax(325px, auto)) minmax(325px, auto) minmax(325px, auto) minmax(325px, auto) minmax(325px, auto) minmax(325px, auto) minmax(325px, auto) minmax(325px, auto) minmax(325px, auto) minmax(325px, auto) minmax(325px, auto);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .memory-journal_card-component {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    grid-template-areas: ". Area-2"
+    ". Area-2"
+    "Area ."
+    ". Area-4"
+    ". Area-4"
+    ". Area-7"
+    "Area-5 ."
+    "Area-6 ."
+    ". ."
+    ". ."
+    ". ."
+    ". ."
+    ". ."
+    ". ."
+    ". ."
+    ". ."
+    ". ."
+    ". ."
+    ". ."
+    ". .";
+    grid-template-rows: repeat(auto-fit, minmax(325px, auto)) minmax(325px, auto) minmax(325px, auto) minmax(325px, auto) minmax(325px, auto) minmax(325px, auto) minmax(325px, auto) minmax(325px, auto) 200px 200px 200px 200px 200px 200px 200px 200px 200px 200px 200px 200px;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .memory-journal_card-component {
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-self: center;
+  }
+}
+
+.slot {
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.slot-wide {
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.slot-tall {
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+#w-node-_77f9e8e7-eed9-4191-0ed3-321749075003-0dabe4a2 {
+  align-self: stretch;
+  justify-self: stretch;
+}
+#w-node-_67231eb0-5cb9-2f9e-45f7-14ce6c3569d3-0dabe4a2 {
+}
+#w-node-d9027129-796c-b31e-a37a-24039f1a4b0a-0dabe4a2 {
+  grid-row-start: span 1;
+  grid-row-end: span 1;
+  grid-column-start: span 2;
+  grid-column-end: span 2;
+  justify-self: stretch;
+  align-self: stretch;
+}
+#w-node-c925a48a-3ca1-5c67-ccc6-a505e80877ef-0dabe4a2 {
+  grid-row-start: span 1;
+  grid-row-end: span 1;
+  grid-column-start: span 1;
+  grid-column-end: span 1;
+}
+#w-node-ae1bedc8-3145-0bdc-1e84-47fb7e2e958d-0dabe4a2 {
+  grid-row-start: span 1;
+  grid-row-end: span 1;
+  grid-column-start: span 1;
+  grid-column-end: span 1;
+}
+#w-node-b4995884-ca5d-3e6a-6fca-2176e033b57c-0dabe4a2 {
+  grid-row-start: span 2;
+  grid-row-end: span 2;
+  grid-column-start: span 1;
+  grid-column-end: span 1;
+  align-self: stretch;
+  justify-self: stretch;
+}
+#w-node-_0056a547-c7e0-796c-b681-040e226a891c-0dabe4a2 {
+}
+#w-node-_91aeee45-a755-c594-2b8f-dfcee4111b30-0dabe4a2 {
+}
+#w-node-bcdbc169-af85-fea7-43e4-d690e8b6740b-0dabe4a2 {
+  grid-row-start: span 1;
+  grid-row-end: span 1;
+  grid-column-start: span 1;
+  grid-column-end: span 1;
+}
+#w-node-a4f84b09-62f4-7270-3a8b-478f3df898cd-0dabe4a2 {
+  align-self: stretch;
+  justify-self: stretch;
+}
+#w-node-f1aa2d5b-d874-98d5-99ef-09da17fb7be1-0dabe4a2 {
+  align-self: stretch;
+  justify-self: stretch;
+}
+#w-node-f1f88473-92a7-dfb1-7311-830732e0931c-0dabe4a2 {
+  grid-row-start: span 2;
+  grid-row-end: span 2;
+  grid-column-start: span 1;
+  grid-column-end: span 1;
+}

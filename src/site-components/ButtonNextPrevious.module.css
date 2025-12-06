@@ -1,0 +1,723 @@
+.component-button_previous-next {
+  display: flex;
+  max-width: 400px;
+  margin: 5px;
+  padding: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  grid-column-gap: 0.15em;
+  grid-row-gap: 0.15em;
+
+  border: 3px solid var(--_colors---core-accent-color--accent-tertiary);
+  border-radius: 10px;
+
+  background-color: transparent;
+  background-image: none;
+
+  filter: none;
+
+  transition: border-color 200ms ease,color 200ms ease,background-color 200ms cubic-bezier(0.165, 0.84, 0.44, 1),box-shadow 200ms ease;
+
+  font-family: Aileron;
+  color: var(--_colors---core-accent-color--accent-tertiary);
+  font-size: var(--_typography---base-typography--base-font-size);
+  line-height: 1;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  text-transform: lowercase;
+
+  cursor: pointer;
+}
+
+.component-button_previous-next:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45a) {
+  padding-left: 0.75rem;
+  grid-column-gap: 0.25em;
+  grid-row-gap: 0.25em;
+}
+
+.component-button_previous-next:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45b) {
+  padding-right: 0.75rem;
+  flex-direction: row-reverse;
+  flex-wrap: nowrap;
+}
+
+.component-button_previous-next:hover {
+  border-style: none;
+  border-color: var(--_colors---button--button-primary-border-hover);
+  background-color: var(--_colors---core-accent-color--accent-tertiary);
+  color: var(--_colors---core-neutral-color--neutral-primary);
+}
+
+.component-button_previous-next:hover:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45a) {
+  border-style: solid;
+  border-color: var(--_colors---core-accent-color--accent-tertiary);
+  border-radius: 10px;
+}
+
+.component-button_previous-next:active {
+  filter: brightness(90%);
+}
+
+.component-button_previous-next:global(.w--current) {
+  background-color: #9a5f68;
+  transition: none 0ms ease;
+  color: var(--_apps---charts--chart-5-dark\<deleted\|variable-661bd001-cd0d-08a9-41c9-5c2693d8ff36\>);
+}
+
+@media screen and (max-width: 479px) {
+  .component-button_previous-next {
+    padding-left: 0.75rem;
+    background-image: none;
+    filter: none;
+    white-space: nowrap;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .component-button_previous-next:global(.w--current) {
+    max-width: 280px;
+  }
+}
+
+.component-button_previous-next.is-accent-tertiary {
+  border-width: 2px;
+  border-color: var(--_colors---button--button-secondary-border);
+
+  background-color: var(--_colors---core-accent-color--accent-tertiary);
+  background-image: none;
+
+  box-shadow: inset 0 0 0 2px var(--_colors---text-color--text-primary);
+  filter: none;
+
+  color: var(--_apps---colors--secondary);
+}
+
+.component-button_previous-next.is-accent-tertiary:where(.w-variant-ee45998d-5a43-c57c-c7d6-4808e7a72733) {
+  background-color: var(--_apps---colors--primary);
+  box-shadow: inset 0 0 0 2px var(--_apps---colors--primary);
+  filter: none;
+  color: var(--_apps---colors--secondary);
+}
+
+.component-button_previous-next.is-accent-tertiary:where(.w-variant-528938e1-f8f6-e1bb-79b8-a5a9da37d75a) {
+  filter: none;
+}
+
+.component-button_previous-next.is-accent-tertiary:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45b) {
+  filter: none;
+}
+
+.component-button_previous-next.is-accent-tertiary:hover {
+  border-color: var(--_colors---button--button-secondary-border-hover);
+  background-color: var(--_colors---core-accent-color--accent-tertiary);
+  box-shadow: inset 0 0 0 1px var(--_colors---text-color--text-primary);
+  filter: brightness(110%);
+  color: var(--_colors---core-neutral-color--neutral-secondary);
+}
+
+.component-button_previous-next.is-accent-tertiary:hover:where(.w-variant-ee45998d-5a43-c57c-c7d6-4808e7a72733) {
+  border-color: var(--_apps---colors--primary);
+  background-color: var(--_apps---colors--primary);
+  box-shadow: inset 0 0 0 2px var(--_apps---colors--primary);
+  filter: brightness(110%);
+}
+
+.component-button_previous-next.is-accent-tertiary:hover:where(.w-variant-528938e1-f8f6-e1bb-79b8-a5a9da37d75a) {
+  background-color: var(--_colors---core-accent-color--accent-tertiary);
+  filter: none;
+}
+
+.component-button_previous-next.is-accent-tertiary:hover:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45b) {
+  background-color: var(--_colors---core-accent-color--accent-tertiary);
+  filter: none;
+}
+
+.component-button_previous-next.is-accent-tertiary:active {
+  background-color: var(--_colors---core-accent-color--accent-tertiary);
+  box-shadow: inset 0 0 0 2px var(--_colors---text-color--text-primary);
+  filter: none;
+}
+
+.component-button_previous-next.is-accent-tertiary:active:where(.w-variant-ee45998d-5a43-c57c-c7d6-4808e7a72733) {
+  filter: none;
+}
+
+.component-button_previous-next.is-accent-tertiary:active:where(.w-variant-528938e1-f8f6-e1bb-79b8-a5a9da37d75a) {
+  filter: brightness(110%);
+}
+
+.component-button_previous-next.is-accent-tertiary:active:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45b) {
+  filter: brightness(110%);
+}
+
+@media screen and (max-width: 767px) {
+  .component-button_previous-next.is-accent-tertiary {
+    flex: 0 0 auto;
+    transition-duration: 4000ms, 400ms, 400ms, 400ms;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .component-button_previous-next.is-accent-tertiary:hover {
+    background-color: var(--_apps---colors--popover-foreground\<deleted\|variable-b4b9c517-c237-1b7a-b1da-5ced180a7ceb\>);
+    color: var(--_apps---colors--secondary\<deleted\|variable-98c23718-aafc-19d5-4d00-58b071ab723a\>);
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .component-button_previous-next.is-accent-tertiary {
+    max-width: 280px;
+    margin-right: 0px;
+  }
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-primary {
+  border-color: var(--_colors---button--button-primary-text);
+  background-color: transparent;
+  background-image: none;
+  box-shadow: 0 0 0 2px var(--_colors---text-color--text-inverse-primary) inset;
+  color: var(--_colors---text-color--text-inverse-primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-primary:hover {
+  background-color: transparent;
+  box-shadow: 0 0 0 1px var(--_colors---text-color--text-inverse-primary) inset;
+  color: var(--_colors---text-link--link-inverse-hover);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-primary:active {
+  background-color: transparent;
+  box-shadow: 0 0 0 2px var(--_colors---text-color--text-inverse-primary) inset;
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-secondary {
+  background-color: transparent;
+  background-image: none;
+  box-shadow: 0 0 0 2px var(--_colors---text-color--text-primary) inset;
+  color: var(--_colors---text-color--text-primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-secondary:hover {
+  background-color: transparent;
+  box-shadow: 0 0 0 1px var(--_colors---text-color--text-primary) inset;
+  color: var(--_colors---text-link--link-inverse-hover);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-secondary:active {
+  background-color: transparent;
+  box-shadow: 0 0 0 2px var(--_colors---text-color--text-primary) inset;
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-tertiary {
+  border: 0px none var(--_colors---core-accent-color--accent-tertiary);
+  background-color: var(--_colors---core-accent-color--accent-tertiary);
+  background-image: none;
+  box-shadow: inset 0 0 0 2px var(--_colors---text-color--text-primary);
+  color: var(--_colors---background-color--bg-primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-tertiary:where(.w-variant-a5b066d0-eea5-807d-c902-fb41893ff2ea) {
+  background-color: transparent;
+  box-shadow: inset 0 0 0 2px var(--_colors---core-accent-color--accent-primary);
+  color: var(--_apps---colors--primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-tertiary:where(.w-variant-ee45998d-5a43-c57c-c7d6-4808e7a72733) {
+  border-style: none;
+  background-color: var(--_colors---core-accent-color--accent-primary);
+  box-shadow: inset 0 0 0 2px var(--_colors---core-accent-color--accent-primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-tertiary:where(.w-variant-528938e1-f8f6-e1bb-79b8-a5a9da37d75a) {
+  background-color: transparent;
+  color: var(--_colors---core-accent-color--accent-tertiary);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-tertiary:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45a) {
+  background-color: transparent;
+  box-shadow: inset 0 0 0 2px var(--_colors---core-accent-color--accent-primary);
+  color: var(--_apps---colors--primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-tertiary:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45b) {
+  background-color: transparent;
+  color: var(--_colors---core-accent-color--accent-tertiary);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-tertiary:hover {
+  background-color: var(--_colors---core-accent-color--accent-tertiary);
+  box-shadow: inset 0 0 0 1px var(--_colors---core-accent-color--accent-tertiary);
+  color: var(--_colors---core-neutral-color--neutral-secondary);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-tertiary:hover:where(.w-variant-528938e1-f8f6-e1bb-79b8-a5a9da37d75a) {
+  background-color: var(--_colors---core-accent-color--accent-tertiary);
+  filter: none;
+  color: var(--_colors---core-neutral-color--neutral-secondary);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-tertiary:hover:where(.w-variant-a5b066d0-eea5-807d-c902-fb41893ff2ea) {
+  background-color: var(--_apps---colors--primary);
+  box-shadow: inset 0 0 0 1px var(--_apps---colors--primary);
+  filter: none;
+  color: var(--_apps---colors--secondary);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-tertiary:hover:where(.w-variant-ee45998d-5a43-c57c-c7d6-4808e7a72733) {
+  background-color: var(--_colors---core-accent-color--accent-primary);
+  box-shadow: inset 0 0 0 2px var(--_colors---core-accent-color--accent-primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-tertiary:hover:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45b) {
+  background-color: var(--_colors---core-accent-color--accent-tertiary);
+  filter: none;
+  color: var(--_colors---core-neutral-color--neutral-secondary);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-tertiary:hover:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45a) {
+  background-color: var(--_apps---colors--primary);
+  box-shadow: inset 0 0 0 1px var(--_apps---colors--primary);
+  filter: none;
+  color: var(--_apps---colors--secondary);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-tertiary:active {
+  background-color: var(--_colors---core-accent-color--accent-tertiary);
+  box-shadow: inset 0 0 0 2px var(--_colors---core-accent-color--accent-tertiary);
+  filter: none;
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-tertiary:active:where(.w-variant-a5b066d0-eea5-807d-c902-fb41893ff2ea) {
+  filter: brightness(110%);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-tertiary:active:where(.w-variant-ee45998d-5a43-c57c-c7d6-4808e7a72733) {
+  filter: none;
+}
+
+.component-button_previous-next.is-accent-tertiary.on-accent-tertiary:active:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45a) {
+  filter: brightness(110%);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-inverse {
+  background-color: transparent;
+  background-image: none;
+  box-shadow: 0 0 0 2px var(--_colors---text-color--text-inverse-primary) inset;
+  color: var(--_colors---text-color--text-inverse-primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.on-inverse:hover {
+  background-color: transparent;
+  box-shadow: 0 0 0 1px var(--_colors---text-color--text-inverse-primary) inset;
+}
+
+.component-button_previous-next.is-accent-tertiary.on-inverse:active {
+  background-color: transparent;
+  box-shadow: 0 0 0 2px var(--_colors---text-color--text-inverse-primary) inset;
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button {
+  margin-right: 0px;
+
+  border: 0px none var(--_colors---core-accent-color--accent-tertiary);
+
+  box-shadow: none;
+  outline-color: #f5f1eb;
+  outline-offset: 0px;
+  outline-style: none;
+  outline-width: 3px;
+
+  color: var(--_colors---background-color--bg-primary);
+  font-weight: 400;
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button:where(.w-variant-7562c00a-ef15-81f4-91b7-90a0fbab46c7) {
+  border-color: var(--_colors---core-accent-color--accent-primary);
+  background-color: var(--_colors---core-accent-color--accent-primary);
+  box-shadow: inset 0 0 0 2px var(--_colors---core-accent-color--accent-primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button:where(.w-variant-c189fcd3-5a4d-5795-6030-6819db69b481) {
+  background-color: transparent;
+  color: var(--_colors---core-accent-color--accent-tertiary);
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button:where(.w-variant-fbee5f1c-a6fd-a583-6b28-036790acb6e1) {
+  border: 1px none var(--_colors---core-accent-color--accent-primary);
+  background-color: transparent;
+  box-shadow: inset 0 0 0 2px var(--_colors---core-accent-color--accent-primary);
+  opacity: 1;
+  color: var(--_colors---core-accent-color--accent-primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button:where(.w-variant-9258e10b-ad62-6a7c-340f-35176aa91519) {
+  border: 1px none var(--_colors---core-accent-color--accent-primary);
+  background-color: transparent;
+  box-shadow: inset 0 0 0 2px var(--_colors---core-accent-color--accent-primary);
+  opacity: 1;
+  color: var(--_colors---core-accent-color--accent-primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button:where(.w-variant-41a6f2a1-f3ed-2454-f7b2-ac853f4e425b) {
+  border: 1px none var(--_colors---core-accent-color--accent-primary);
+  background-color: transparent;
+  box-shadow: inset 0 0 0 2px var(--_colors---core-accent-color--accent-primary);
+  opacity: 1;
+  color: var(--_colors---core-accent-color--accent-primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button:hover {
+  background-color: var(--_colors---core-accent-color--accent-tertiary);
+  color: var(--_colors---core-neutral-color--neutral-primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button:hover:where(.w-variant-7562c00a-ef15-81f4-91b7-90a0fbab46c7) {
+  background-color: var(--_colors---core-accent-color--accent-primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button:hover:where(.w-variant-c189fcd3-5a4d-5795-6030-6819db69b481) {
+  filter: none;
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button:hover:where(.w-variant-fbee5f1c-a6fd-a583-6b28-036790acb6e1) {
+  background-color: var(--_apps---colors--primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button:hover:where(.w-variant-9258e10b-ad62-6a7c-340f-35176aa91519) {
+  background-color: var(--_apps---colors--primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button:hover:where(.w-variant-41a6f2a1-f3ed-2454-f7b2-ac853f4e425b) {
+  background-color: var(--_apps---colors--primary);
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button:active:where(.w-variant-7562c00a-ef15-81f4-91b7-90a0fbab46c7) {
+  filter: none;
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button:active:where(.w-variant-c189fcd3-5a4d-5795-6030-6819db69b481) {
+  filter: brightness(110%);
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button:active:where(.w-variant-fbee5f1c-a6fd-a583-6b28-036790acb6e1) {
+  filter: brightness(110%);
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button:active:where(.w-variant-9258e10b-ad62-6a7c-340f-35176aa91519) {
+  filter: brightness(110%);
+}
+
+.component-button_previous-next.is-accent-tertiary.hero_button:active:where(.w-variant-41a6f2a1-f3ed-2454-f7b2-ac853f4e425b) {
+  filter: brightness(110%);
+}
+
+@media screen and (max-width: 767px) {
+  .component-button_previous-next.is-accent-tertiary.hero_button {
+    flex: 1;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .component-button_previous-next.is-accent-tertiary.hero_button {
+    width: 100%;
+  }
+}
+
+.component-button_previous-next.is-accent-tertiary.flex-align-right {
+  align-self: flex-end;
+}
+
+@media screen and (max-width: 479px) {
+  .component-button_previous-next.is-accent-tertiary.flex-align-right {
+    align-self: stretch;
+  }
+}
+
+.component-button_previous-next.is-small {
+  font-size: var(--_sizes---spacing--0-75x);
+}
+
+.component-button_previous-next.is-inverse {
+  border-color: transparent;
+  background-color: var(--_colors---core-accent-color--accent-primary);
+  color: var(--_colors---core-neutral-color--neutral-primary);
+}
+
+.component-button_previous-next.is-inverse:hover {
+  border-color: transparent;
+  background-color: var(--_colors---core-accent-color--accent-primary-hover);
+}
+
+.component-button_previous-next.on-accent-primary {
+  background-color: var(--_colors---background-color--bg-primary);
+  background-image: none;
+  box-shadow: none;
+  color: var(--_colors---text-color--text-primary);
+}
+
+.component-button_previous-next.on-accent-primary:hover {
+  border-color: transparent;
+  background-color: var(--_colors---core-color-tint--neutral-primary-a70);
+  box-shadow: none;
+}
+
+.component-button_previous-next.on-accent-primary:active {
+  background-color: var(--_colors---background-color--bg-primary);
+  box-shadow: none;
+}
+
+.component-button_previous-next.on-inverse {
+  border-color: transparent;
+  background-color: var(--_colors---core-accent-color--accent-primary);
+  background-image: none;
+  box-shadow: none;
+  color: var(--_colors---text-color--text-on-accent-primary);
+}
+
+.component-button_previous-next.on-inverse:hover {
+  border-color: transparent;
+  background-color: var(--_colors---core-accent-color--accent-primary-hover);
+  box-shadow: none;
+}
+
+.component-button_previous-next.on-inverse:active {
+  background-color: var(--_colors---core-accent-color--accent-primary);
+  box-shadow: none;
+}
+
+.component-button_previous-next.on-accent-secondary {
+  background-color: var(--_colors---background-color--bg-inverse);
+  background-image: none;
+  box-shadow: none;
+  color: var(--_colors---text-color--text-inverse-primary);
+}
+
+.component-button_previous-next.on-accent-secondary:hover {
+  background-color: var(--_colors---core-color-tint--neutral-inverse-a70);
+  box-shadow: none;
+  color: var(--_colors---text-color--text-primary);
+}
+
+.component-button_previous-next.on-accent-secondary:active {
+  background-color: var(--_colors---background-color--bg-inverse);
+  box-shadow: none;
+}
+
+.component-button_previous-next.on-accent-tertiary {
+  background-color: var(--_colors---background-color--bg-inverse);
+  background-image: none;
+  box-shadow: none;
+  color: var(--_colors---text-color--text-inverse-primary);
+}
+
+.component-button_previous-next.on-accent-tertiary:hover {
+  background-color: var(--_colors---core-color-tint--neutral-inverse-a70);
+  box-shadow: none;
+}
+
+.component-button_previous-next.on-accent-tertiary:active {
+  background-color: var(--_colors---background-color--bg-inverse);
+  box-shadow: none;
+}
+
+.component-button_previous-next.is-primary {
+  padding-right: 1rem;
+  padding-left: 1rem;
+  justify-content: center;
+  align-items: center;
+
+  border-width: 2px;
+  border-color: var(--_colors---button--button-secondary-border);
+
+  background-color: transparent;
+  background-image: none;
+
+  box-shadow: inset 0 0 0 2px var(--_colors---text-color--text-on-accent-primary);
+
+  color: var(--_colors---text-color--text-inverse-primary);
+}
+
+.component-button_previous-next.is-primary:hover {
+  border-color: var(--_colors---button--button-secondary-border-hover);
+  background-color: var(--_colors---text-color--text-inverse-primary);
+  box-shadow: inset 0 0 0 1px var(--_colors---text-color--text-primary);
+  color: var(--_colors---text-color--text-primary);
+}
+
+.component-button_previous-next.is-primary:active {
+  background-color: transparent;
+  box-shadow: 0 0 0 2px var(--_colors---text-color--text-primary) inset;
+}
+
+@media screen and (max-width: 767px) {
+  .component-button_previous-next.is-primary {
+    flex: 0 0 auto;
+    transition-duration: 4000ms, 400ms, 400ms, 400ms;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .component-button_previous-next.is-primary:hover {
+    background-color: var(--_apps---colors--popover-foreground\<deleted\|variable-b4b9c517-c237-1b7a-b1da-5ced180a7ceb\>);
+    color: var(--_apps---colors--secondary\<deleted\|variable-98c23718-aafc-19d5-4d00-58b071ab723a\>);
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .component-button_previous-next.is-primary {
+    max-width: 280px;
+    margin-right: 0px;
+  }
+}
+
+.component-button_previous-next.colorize_fade_t0 {
+  color: var(--_apps---colors--primary);
+}
+
+.colorize_t6 {
+  transition: filter 400ms ease,opacity 400ms ease;
+}
+
+.component-button_previous-next.text-color-neutral-primary {
+  color: var(--_colors---core-neutral-color--neutral-primary);
+}
+
+.component-button_previous-next.text-color-neutral-primary:global(.w--current) {
+  color: var(--_colors---core-neutral-color--neutral-primary);
+}
+
+.component-button_previous-next.next-2 {
+  padding-left: 0.75rem;
+  grid-column-gap: 0.25em;
+  grid-row-gap: 0.25em;
+}
+
+.component-button_previous-next.next-2:hover {
+  border-style: solid;
+  border-color: #29708d;
+  border-radius: 10px;
+}
+
+.button_next-previous {
+  background-color: transparent;
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 400;
+  color: inherit;
+}
+
+.button_next-previous:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45a) {
+  background-color: transparent;
+  font-weight: 400;
+  color: inherit;
+}
+
+.button_next-previous:hover {
+  color: inherit;
+}
+
+.button_next-previous.previous {
+  display: none;
+  padding: 0px;
+}
+
+.button_next-previous.previous:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45a) {
+  display: none;
+}
+
+.button_next-previous.previous:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45b) {
+  display: flex;
+  padding: 0px;
+  align-self: center;
+  grid-column-gap: 10px;
+}
+
+.button_next-previous.previous.next-5 {
+  display: none;
+  background-color: transparent;
+  font-weight: 400;
+  color: inherit;
+}
+
+.button_next-previous.next {
+  display: none;
+  padding: 0px;
+}
+
+.button_next-previous.next:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45a) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column-gap: 10px;
+}
+
+.button_next-previous.next:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45b) {
+  display: none;
+}
+
+.button_next-previous.next.next-4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: transparent;
+
+  font-weight: 400;
+  color: inherit;
+}
+
+.button_next-previous.view-more {
+  padding: 5px;
+}
+
+.button_next-previous.view-more:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45a) {
+  display: none;
+}
+
+.button_next-previous.view-more:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45b) {
+  display: none;
+}
+
+.button_next-previous.view-more.next-3 {
+  display: none;
+  background-color: transparent;
+  font-weight: 400;
+  color: inherit;
+}
+
+.button_next-previous-text:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45b) {
+  display: block;
+  align-self: center;
+}
+
+.code-embed_next-icon {
+  display: none;
+}
+
+.code-embed_next-icon.next {
+  display: flex;
+}
+
+.code-embed_next-icon.next:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45a) {
+  display: flex;
+}
+
+.code-embed_next-icon.next.next-6 {
+  display: flex;
+}
+
+.code-embed_previous-icon {
+  display: none;
+}
+
+.code-embed_previous-icon.previous {
+  display: flex;
+  transform: rotate(180deg);
+}
+
+.code-embed_previous-icon.previous:where(.w-variant-35fdfe12-a636-2f7f-c1e4-e4c9ad71f45b) {
+  display: flex;
+  transform: rotate(180deg);
+}
