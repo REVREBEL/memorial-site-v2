@@ -57,3 +57,22 @@ export function WebflowMemoryJournalCardSlots({
     </_Component>
   );
 }
+export function WebflowMemoryJournalCardSlots(
+    {
+        as: _Component = _Builtin.Block,
+        slot,
+        slot,
+        slot,
+        slot,
+        slot,
+        slot,
+        slot,
+        slot,
+        slot,
+        slot,
+        slot,
+        slot
+    }
+) {
+    return <_Component className="memory-journal_cards-section" tag="section"><_Builtin.Block className="memory-journal_card-section-padding" tag="div"><_Builtin.Block className="memory-journal_inner-form-container-copy" tag="div"><_Builtin.Block className="memory-journal_card-component" tag="div"><_Builtin.NotSupported _atom="Slot" /><_Builtin.NotSupported _atom="Slot" /><_Builtin.NotSupported _atom="Slot" /><_Builtin.NotSupported _atom="Slot" /><_Builtin.NotSupported _atom="Slot" /><_Builtin.NotSupported _atom="Slot" /><_Builtin.NotSupported _atom="Slot" /><_Builtin.NotSupported _atom="Slot" /><_Builtin.NotSupported _atom="Slot" /><_Builtin.NotSupported _atom="Slot" /><_Builtin.NotSupported _atom="Slot" /><_Builtin.NotSupported _atom="Slot" /></_Builtin.Block></_Builtin.Block></_Builtin.Block></_Component>;
+}

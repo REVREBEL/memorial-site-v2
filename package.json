@@ -11,7 +11,8 @@
     "cf-typegen": "wrangler types",
     "db:generate": "drizzle-kit generate",
     "db:apply:local": "wrangler d1 migrations apply DB --local",
-    "build:docs": "node ./scripts/build-master-doc.mjs"
+    "build:docs": "node ./scripts/build-master-doc.mjs",
+    "cleanup": "rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache /root/.local /app/lost+found/* /app/dist 2>/dev/null || true && echo 'Cleanup complete!' && df -h / | tail -1"
   },
   "dependencies": {
     "@astrojs/cloudflare": "12.6.7",

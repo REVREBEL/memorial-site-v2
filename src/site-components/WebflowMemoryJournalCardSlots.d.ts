@@ -16,3 +16,20 @@ declare function WebflowMemoryJournalCardSlots(props: {
   slot?: Types.Slots.SlotContent;
   slot?: Types.Slots.SlotContent;
 }): React.JSX.Element;
+declare function WebflowMemoryJournalCardSlots(
+    props: {
+        as?: React.ElementType;
+        slot?: Types.Slots.SlotContent;
+        slot?: Types.Slots.SlotContent;
+        slot?: Types.Slots.SlotContent;
+        slot?: Types.Slots.SlotContent;
+        slot?: Types.Slots.SlotContent;
+        slot?: Types.Slots.SlotContent;
+        slot?: Types.Slots.SlotContent;
+        slot?: Types.Slots.SlotContent;
+        slot?: Types.Slots.SlotContent;
+        slot?: Types.Slots.SlotContent;
+        slot?: Types.Slots.SlotContent;
+        slot?: Types.Slots.SlotContent;
+    }
+): React.JSX.Element

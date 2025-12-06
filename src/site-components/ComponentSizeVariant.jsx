@@ -308,3 +308,57 @@ export function ComponentSizeVariant({
     </_Component>
   );
 }
+                {...backgroundColorCardBackgroundColorCardRuntimeProps}>{backgroundColorCardBackgroundColorCardSlot}</_Builtin.Block>{backgroundCardImageWebflowImageVisibility ? <_Builtin.Block
+                className={`memory-wall_image-overlay ${_activeStyleVariant}`}
+                data-w-id="5cc069fb-8c56-60ee-d04f-f97f30631912"
+                tag="div" /> : null}{backgroundCardImageDevLinkImageVisibility ? <_Builtin.Block
+                className={`memory-wall_image colorize_on-hover ${_activeStyleVariant}`}
+                tag="div"
+                id={memoryDateTopCardMemoryCardImageId}
+                {...backgroundCardImageMemoryCardImageRuntimeProps}>{backgroundCardImageMemoryCardImageSlot}</_Builtin.Block> : null}{backgroundCardImageWebflowImageVisibility ? <_Builtin.Image
+                className={`memory-wall_image colorize_on-hover is-hidden ${_activeStyleVariant}`}
+                data-w-id="42559019-68e5-39f0-820b-942110e6047e"
+                width="auto"
+                height="auto"
+                loading="lazy"
+                id={memoryDateTopCardMemoryCardImageId}
+                src={backgroundCardImageMemoryCardImage}
+                {...backgroundCardImageMemoryCardImageRuntimeProps} /> : null}<_Builtin.Block className={`memory-wall_top-content ${_activeStyleVariant}`} tag="div"><_Builtin.Block
+                    className={`memory-wall_summary-card-date ${_activeStyleVariant}`}
+                    tag="div"
+                    {...memoryDateTopCardMemoryDateRuntimeProps}>{memoryDateTopCardMemoryDateSlot ?? memoryDateTopCardMemoryDateMmmYyyy}</_Builtin.Block><_Builtin.Block
+                    className={`memory-wall_heading-wrapper ${_activeStyleVariant}`}
+                    tag="div"><_Builtin.Heading
+                        className={`memory-wall_card-heading ${_activeStyleVariant}`}
+                        tag={topCardMemoryHeadlineTag}>{topCardMemoryHeadlineText}</_Builtin.Heading><_Builtin.Block
+                        className={`memory-wall_shared-by ${_activeStyleVariant}`}
+                        tag="div"
+                        {...sharedBySharedByRuntimeProps}>{sharedBySharedBySlot ?? sharedBySharedByText}</_Builtin.Block><_Builtin.Block className={`location-wrapper ${_activeStyleVariant}`} tag="div">{metaLocationMetaLocationIconVisibility ? <_Builtin.HtmlEmbed
+                            className={`icon location-icon is-white ${_activeStyleVariant}`}
+                            value="%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20width%3D%2224px%22%20height%3D%2224px%22%20stroke-width%3D%221.5%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20color%3D%22currentColor%22%3E%3Cpath%20d%3D%22M20%2010C20%2014.4183%2012%2022%2012%2022C12%2022%204%2014.4183%204%2010C4%205.58172%207.58172%202%2012%202C16.4183%202%2020%205.58172%2020%2010Z%22%20stroke%3D%22currentColor%22%20stroke-width%3D%221.5%22%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M12%2011C12.5523%2011%2013%2010.5523%2013%2010C13%209.44772%2012.5523%209%2012%209C11.4477%209%2011%209.44772%2011%2010C11%2010.5523%2011.4477%2011%2012%2011Z%22%20fill%3D%22currentColor%22%20stroke%3D%22currentColor%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E" /> : null}<_Builtin.Block className={`location-item ${_activeStyleVariant}`} tag="div"><_Builtin.Block
+                                className={`memory-wall_location ${_activeStyleVariant}`}
+                                tag="div"
+                                {...metaLocationMetaLocationRuntimeProps}>{metaLocationMetaLocationSlot ?? metaLocationLocationText}</_Builtin.Block></_Builtin.Block><_Builtin.Block
+                            className={`memory-wall_days-count ${_activeStyleVariant}`}
+                            tag="div"
+                            {...topCardMetaCountTimeRuntimeProps}>{topCardMetaCountTimeSlot ?? memoryDateTopCardTimeIndicator}</_Builtin.Block></_Builtin.Block></_Builtin.Block><_Builtin.Block
+                    className={`memory-wall_read-more_button ${_activeStyleVariant}`}
+                    tag="div"><_Builtin.Block
+                        className={`memory-wall_button-text tag ${_activeStyleVariant}`}
+                        tag="div"
+                        {...readMoreButtonReadMoreButtonRuntimeProps}>{readMoreButtonReadMoreButtonSlot ?? readMoreButtonReadMoreButtonText}</_Builtin.Block></_Builtin.Block></_Builtin.Block><_Builtin.Block
+                className={`memory-wall_botom-content component-card-color ${_activeStyleVariant}`}
+                data-w-id="42559019-68e5-39f0-820b-942110e60484"
+                tag="div"
+                {...bottomCardBottomCardRuntimeProps}>{bottomCardBottomCardSlot ?? <><_Builtin.Block
+                        className={`memory-wall_bottom-paragraph ${_activeStyleVariant}`}
+                        tag="div"
+                        {...memoryDetailMemoryDetailRuntimeProps}>{memoryDetailMemoryDetailSlot ?? memoryDetailMemoryDetailParagraph}</_Builtin.Block><_Builtin.Block className={`memory-wall_meta-wrapper ${_activeStyleVariant}`} tag="div"><_Builtin.Block
+                            className={`memory-wall_summary-card-date ${_activeStyleVariant}`}
+                            tag="div"
+                            {...memoryDateBottomCardMemoryDateRuntimeProps}>{memoryDateBottomCardMemoryDateSlot ?? memoryDateTopCardMemoryDateMmmYyyy}</_Builtin.Block>{likeIconLikeIconVisibility ? <_Builtin.HtmlEmbed
+                            className={`like-icon ${_activeStyleVariant}`}
+                            value="%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20width%3D%2230px%22%20height%3D%2230px%22%20stroke-width%3D%221.5%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20color%3D%22currentColor%22%3E%3Cpath%20d%3D%22M22%208.86222C22%2010.4087%2021.4062%2011.8941%2020.3458%2012.9929C17.9049%2015.523%2015.5374%2018.1613%2013.0053%2020.5997C12.4249%2021.1505%2011.5042%2021.1304%2010.9488%2020.5547L3.65376%2012.9929C1.44875%2010.7072%201.44875%207.01723%203.65376%204.73157C5.88044%202.42345%209.50794%202.42345%2011.7346%204.73157L11.9998%205.00642L12.2648%204.73173C13.3324%203.6245%2014.7864%203%2016.3053%203C17.8242%203%2019.2781%203.62444%2020.3458%204.73157C21.4063%205.83045%2022%207.31577%2022%208.86222Z%22%20stroke%3D%22currentColor%22%20stroke-width%3D%221.5%22%20stroke-linejoin%3D%22round%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"
+                            {...likeIconLikeIconRuntimeProps} /> : null}</_Builtin.Block></>}</_Builtin.Block></_Component>
+    );
+}

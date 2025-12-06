@@ -7,7 +7,7 @@ import { GuestbookSubHeading } from '../site-components/GuestbookSubHeading';
 import { GuestbookCount } from '../site-components/GuestbookCount';
 import { GuestbookCard } from '../site-components/GuestbookCard';
 import { GuestbookForm } from '../site-components/GuestbookForm';
-import { FilterTagsSlots } from '../site-components/FilterTagsSlots';
+import { GuestbookFilterTagsSlots } from '../site-components/GuestbookFilterTagsSlots';
 import { FilterPreviousNextSlots } from '../site-components/FilterPreviousNextSlots';
 import { GuestbookFilterTag } from '../site-components/GuestbookFilterTag';
 import { ButtonNextPrevious } from '../site-components/ButtonNextPrevious';
@@ -116,7 +116,7 @@ export function GuestBookWrapper() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        const errorData = await response.json() as { error?: string };
         throw new Error(errorData.error || 'Failed to submit entry');
       }
 
@@ -184,6 +184,21 @@ export function GuestBookWrapper() {
     return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
   };
 
+  // Map relationship to filterVariant
+  const getFilterVariant = (relationship: string, isSelected: boolean): any => {
+    if (isSelected) return 'Clear';
+    
+    const variantMap: Record<string, string> = {
+      'Family': 'Family',
+      'Relative': 'Relatives',
+      'Friend': 'Friends',
+      'Co-Worker': 'Co-Workers',
+      'Business Partner': 'Business Partners',
+    };
+    
+    return variantMap[relationship] || 'Secondary Outline';
+  };
+
   return (
     <DevLinkProvider>
       <GuestbookComponentSlots
@@ -197,11 +212,17 @@ export function GuestBookWrapper() {
           <GuestbookForm
             fullNameFormFieldLabel="Full Name *"
             fullNameFormFieldId="guestbook-name"
-            fullNameFormIconVisibility={formData.name ? 'visible' : 'hidden'}
+            fullNameFormIconVisibility={!!formData.name}
+            fullNameFormInputRuntimeProps={{
+              value: formData.name,
+              onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                setFormData({ ...formData, name: e.target.value });
+              },
+            }}
             
             locationFieldFormFieldLabel="Location"
             locationFieldFormFieldId="guestbook-location"
-            locationFieldFormIconVisibility={formData.location ? 'visible' : 'hidden'}
+            locationFieldFormIconVisibility={!!formData.location}
             locationFieldFormInputRuntimeProps={{
               value: formData.location,
               onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -211,7 +232,7 @@ export function GuestBookWrapper() {
             
             firstMetFieldFormFieldLabel="How We First Met"
             firstMetFieldFormFieldId="guestbook-first-met"
-            firstMetFieldFormIconVisibility={formData.firstMet ? 'visible' : 'hidden'}
+            firstMetFieldFormIconVisibility={!!formData.firstMet}
             firstMetFieldFormInputRuntimeProps={{
               value: formData.firstMet,
               onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -245,7 +266,7 @@ export function GuestBookWrapper() {
             emailFieldFormFieldLabel="Email Address"
             emailFieldFormFieldId="guestbook-email"
             emailFieldBottomDisclaimerLabel="We'll never share your email with anyone else."
-            emailFieldFormIconVisibility={formData.email ? 'visible' : 'hidden'}
+            emailFieldFormIconVisibility={!!formData.email}
             emailFieldFormInputRuntimeProps={{
               value: formData.email,
               onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -275,7 +296,7 @@ export function GuestBookWrapper() {
           />
         }
         guestbookNamesHeadingSlot={
-          <GuestbookNamesHeading namesHeadlineText="Recent Entries" />
+          <GuestbookNamesHeading headlineNamesHeadingText="Recent Entries" />
         }
         guestbookCountSlot={
           <GuestbookCount
@@ -283,11 +304,12 @@ export function GuestBookWrapper() {
           />
         }
         filterTagsSlot={
-          <FilterTagsSlots
+          <GuestbookFilterTagsSlots
             tag1NewestTagSlot={
               <GuestbookFilterTag
-                tagText="All"
-                tagRuntimeProps={{
+                filterVariant="Newest Tag"
+                text="All"
+                runtimeProps={{
                   onClick: () => handleTagFilter(null),
                   style: {
                     opacity: selectedTag === null ? 1 : 0.6,
@@ -299,8 +321,9 @@ export function GuestBookWrapper() {
             tag2FamilyTagSlot={
               uniqueRelationships.includes('Family') ? (
                 <GuestbookFilterTag
-                  tagText="Family"
-                  tagRuntimeProps={{
+                  filterVariant={getFilterVariant('Family', selectedTag === 'Family')}
+                  text="Family"
+                  runtimeProps={{
                     onClick: () => handleTagFilter('Family'),
                     style: {
                       opacity: selectedTag === 'Family' ? 1 : 0.6,
@@ -310,12 +333,13 @@ export function GuestBookWrapper() {
                 />
               ) : undefined
             }
-            tag2Visibility={uniqueRelationships.includes('Family') ? 'visible' : 'hidden'}
+            tag2Visibility={uniqueRelationships.includes('Family')}
             tag3RelativeTagSlot={
               uniqueRelationships.includes('Relative') ? (
                 <GuestbookFilterTag
-                  tagText="Relative"
-                  tagRuntimeProps={{
+                  filterVariant={getFilterVariant('Relative', selectedTag === 'Relative')}
+                  text="Relative"
+                  runtimeProps={{
                     onClick: () => handleTagFilter('Relative'),
                     style: {
                       opacity: selectedTag === 'Relative' ? 1 : 0.6,
@@ -325,12 +349,13 @@ export function GuestBookWrapper() {
                 />
               ) : undefined
             }
-            tag3Visibility={uniqueRelationships.includes('Relative') ? 'visible' : 'hidden'}
+            tag3Visibility={uniqueRelationships.includes('Relative')}
             tag4FriendsTagSlot={
               uniqueRelationships.includes('Friend') ? (
                 <GuestbookFilterTag
-                  tagText="Friend"
-                  tagRuntimeProps={{
+                  filterVariant={getFilterVariant('Friend', selectedTag === 'Friend')}
+                  text="Friend"
+                  runtimeProps={{
                     onClick: () => handleTagFilter('Friend'),
                     style: {
                       opacity: selectedTag === 'Friend' ? 1 : 0.6,
@@ -340,12 +365,13 @@ export function GuestBookWrapper() {
                 />
               ) : undefined
             }
-            tag4Visibility={uniqueRelationships.includes('Friend') ? 'visible' : 'hidden'}
+            tag4Visibility={uniqueRelationships.includes('Friend')}
             tag5CoWorkerTagSlot={
               uniqueRelationships.includes('Co-Worker') ? (
                 <GuestbookFilterTag
-                  tagText="Co-Worker"
-                  tagRuntimeProps={{
+                  filterVariant={getFilterVariant('Co-Worker', selectedTag === 'Co-Worker')}
+                  text="Co-Worker"
+                  runtimeProps={{
                     onClick: () => handleTagFilter('Co-Worker'),
                     style: {
                       opacity: selectedTag === 'Co-Worker' ? 1 : 0.6,
@@ -355,12 +381,13 @@ export function GuestBookWrapper() {
                 />
               ) : undefined
             }
-            tag5Visibility={uniqueRelationships.includes('Co-Worker') ? 'visible' : 'hidden'}
+            tag5Visibility={uniqueRelationships.includes('Co-Worker')}
             tag6BusinessPartnerTagSlot={
               uniqueRelationships.includes('Business Partner') ? (
                 <GuestbookFilterTag
-                  tagText="Business Partner"
-                  tagRuntimeProps={{
+                  filterVariant={getFilterVariant('Business Partner', selectedTag === 'Business Partner')}
+                  text="Business Partner"
+                  runtimeProps={{
                     onClick: () => handleTagFilter('Business Partner'),
                     style: {
                       opacity: selectedTag === 'Business Partner' ? 1 : 0.6,
@@ -370,12 +397,13 @@ export function GuestBookWrapper() {
                 />
               ) : undefined
             }
-            tag6Visibility={uniqueRelationships.includes('Business Partner') ? 'visible' : 'hidden'}
+            tag6Visibility={uniqueRelationships.includes('Business Partner')}
             tag7ChurchFriendSlot={
               uniqueRelationships.includes('Church Friend') ? (
                 <GuestbookFilterTag
-                  tagText="Church Friend"
-                  tagRuntimeProps={{
+                  filterVariant="Secondary Outline"
+                  text="Church Friend"
+                  runtimeProps={{
                     onClick: () => handleTagFilter('Church Friend'),
                     style: {
                       opacity: selectedTag === 'Church Friend' ? 1 : 0.6,
@@ -385,12 +413,13 @@ export function GuestBookWrapper() {
                 />
               ) : undefined
             }
-            tag7Visibility={uniqueRelationships.includes('Church Friend') ? 'visible' : 'hidden'}
+            tag7Visibility={uniqueRelationships.includes('Church Friend')}
             tag8NeverMetTagSlot={
               uniqueRelationships.includes('Never Met') ? (
                 <GuestbookFilterTag
-                  tagText="Never Met"
-                  tagRuntimeProps={{
+                  filterVariant="Secondary Outline"
+                  text="Never Met"
+                  runtimeProps={{
                     onClick: () => handleTagFilter('Never Met'),
                     style: {
                       opacity: selectedTag === 'Never Met' ? 1 : 0.6,
@@ -400,7 +429,7 @@ export function GuestBookWrapper() {
                 />
               ) : undefined
             }
-            tag8Visibility={uniqueRelationships.includes('Never Met') ? 'visible' : 'hidden'}
+            tag8Visibility={uniqueRelationships.includes('Never Met')}
           />
         }
         guestbookCardSlot={
@@ -414,21 +443,16 @@ export function GuestBookWrapper() {
                 <GuestbookCard
                   key={entry.id}
                   nameFullName={entry.name}
-                  locationLocationText={entry.location || 'Location not provided'}
-                  locationVisibility={entry.location ? 'visible' : 'hidden'}
-                  howWeMetHowWeMetText={entry.firstMet || 'Not specified'}
-                  howWeMetVisibility={entry.firstMet ? 'visible' : 'hidden'}
-                  messageMessageText={entry.message || 'No message provided'}
-                  messageVisibility={entry.message ? 'visible' : 'hidden'}
+                  locationVisibility={!!entry.location}
+                  locationLocationText={entry.location || ''}
+                  howWeMetVisibility={!!entry.firstMet}
+                  howWeMetHowWeMetText={entry.firstMet || ''}
+                  messageVisibility={!!entry.message}
+                  messageMessageText={entry.message || ''}
+                  tag1Visibility={!!entry.relationship}
                   tag1Text={entry.relationship || ''}
-                  tag1Visibility={entry.relationship ? 'visible' : 'hidden'}
                   guestbookDateDateLabel="Signed on"
                   guestbookDateGuestbookDate={formatDate(entry.createdAt)}
-                  viewMessageButtonButtonText="View Full Message"
-                  cardDetailsButtonButtonText="Close"
-                  messageHeadingText="Message"
-                  howWeMetHeadingText="How We Met"
-                  messageMessageHeading="Their Message"
                 />
               ))}
             </>
@@ -451,7 +475,6 @@ export function GuestBookWrapper() {
                 <ButtonNextPrevious
                   buttonVariantType="Previous"
                   previousPageButtonText="Previous"
-                  previousPageVisibility="visible"
                   buttonRuntimeProps={{
                     onClick: goToPreviousPage,
                     disabled: currentPage === 1,
@@ -466,7 +489,6 @@ export function GuestBookWrapper() {
                 <ButtonNextPrevious
                   buttonVariantType="Next"
                   nextButtonText="Next"
-                  nextVisibility="visible"
                   buttonRuntimeProps={{
                     onClick: goToNextPage,
                     disabled: currentPage === totalPages,
