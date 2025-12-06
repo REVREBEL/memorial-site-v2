@@ -1,0 +1,120 @@
+.guestbook_count-container {
+  display: block;
+  max-width: 30rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 2rem;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: stretch;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  grid-auto-columns: 1fr;
+  grid-column-gap: 16px;
+  grid-row-gap: 16px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+
+  color: var(--_colors---core-accent-color--accent-primary);
+}
+
+@media screen and (min-width: 1280px) {
+  .guestbook_count-container {
+    padding-top: 4rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .guestbook_count-container {
+    border-style: none;
+  }
+}
+
+.guestbook_count-wrapper {
+  display: inline-grid;
+  max-width: 30rem;
+  padding: 3rem 2rem 2rem;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: stretch;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  grid-auto-columns: 1fr;
+  grid-column-gap: 16px;
+  grid-row-gap: 16px;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: auto;
+
+  border: 2px solid var(--_colors---core-accent-color--accent-primary);
+
+  color: var(--_colors---core-accent-color--accent-primary);
+}
+
+@media screen and (min-width: 1280px) {
+  .guestbook_count-wrapper {
+    padding-top: 4rem;
+  }
+}
+
+.number-accent {
+  font-family: 'Stolen Love';
+  color: var(--_colors---text-color--text-primary);
+  font-size: 6rem;
+  font-weight: 900;
+}
+
+.number-accent.text-color-green {
+  position: absolute;
+  left: 0px;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  font-size: 8rem;
+  text-align: right;
+  color: inherit;
+}
+
+@media screen and (min-width: 1280px) {
+  .number-accent.text-color-green {
+    font-size: 10rem;
+  }
+}
+
+.text-color-green {
+  color: #0097b2;
+}
+
+.number-accent.guestbook_count {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  font-size: 8rem;
+  text-align: right;
+  color: inherit;
+}
+
+@media screen and (min-width: 1280px) {
+  .number-accent.guestbook_count {
+    font-size: 10rem;
+  }
+}
+
+.paragraph {
+  margin-bottom: 0.7em;
+  font-size: 1rem;
+  font-weight: 300;
+  text-wrap: pretty;
+}
+
+#w-node-d5060127-3298-5396-645e-d9e062c4df12-728a209f {
+  align-self: center;
+  justify-self: center;
+}
+#w-node-d3e658c3-2779-15e0-efb0-7233728a20a0-728a209f {
+}
+#w-node-d3e658c3-2779-15e0-efb0-7233728a20a2-728a209f {
+  align-self: center;
+}

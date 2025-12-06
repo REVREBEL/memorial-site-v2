@@ -116,6 +116,10 @@
   align-items: center;
 }
 
+@media screen and (max-width: 991px) {
+
+}
+
 @media screen and (max-width: 479px) {
   .flex_vertical.flex-align_center {
     overflow: hidden;
