@@ -10,10 +10,9 @@ const _interactionsData = JSON.parse(
 export function ComponentSizeVariant(
     {
         as: _Component = _Builtin.Block,
-        componentComponentId,
-        componentComponentVisibility = true,
         componentComponentSizeVariant = "1x1",
-        backgroundCardImageMemoryCardVisibility = true,
+        backgroundCardImageWebflowImageVisibility = true,
+        backgroundCardImageDevLinkImageVisibility = false,
         backgroundCardImageMemoryCardImageSlot,
         backgroundCardImageMemoryCardImage = "https://cdn.prod.website-files.com/69219eaa23d0fd8b7effe1fe/69297c6ba716fc21cbfb0b96_IMG_1549-Edit.avif",
         backgroundCardImageMemoryCardImageAltText = "__wf_reserved_inherit",
@@ -65,7 +64,7 @@ export function ComponentSizeVariant(
                 className={`memory-wall_color-card ${_activeStyleVariant}`}
                 data-w-id="551718f1-d240-dffd-aed8-1650c9729974"
                 tag="div"
-                {...backgroundColorCardBackgroundColorCardRuntimeProps}>{backgroundColorCardBackgroundColorCardSlot}</_Builtin.Block>{backgroundCardImageMemoryCardVisibility ? <_Builtin.Image
+                {...backgroundColorCardBackgroundColorCardRuntimeProps}>{backgroundColorCardBackgroundColorCardSlot}</_Builtin.Block>{backgroundCardImageWebflowImageVisibility ? <_Builtin.Image
                 className={`memory-wall_image colorize_on-hover is-hidden ${_activeStyleVariant}`}
                 data-w-id="42559019-68e5-39f0-820b-942110e6047e"
                 width="auto"
@@ -73,11 +72,11 @@ export function ComponentSizeVariant(
                 loading="lazy"
                 id={memoryDateTopCardMemoryCardImageId}
                 src={backgroundCardImageMemoryCardImage}
-                {...backgroundCardImageMemoryCardImageRuntimeProps} /> : null}{backgroundCardImageMemoryCardVisibility ? <_Builtin.Block
+                {...backgroundCardImageMemoryCardImageRuntimeProps} /> : null}{backgroundCardImageDevLinkImageVisibility ? <_Builtin.Block
                 className={`memory-wall_image colorize_on-hover ${_activeStyleVariant}`}
                 tag="div"
                 id={memoryDateTopCardMemoryCardImageId}
-                {...backgroundCardImageMemoryCardImageRuntimeProps}>{backgroundCardImageMemoryCardImageSlot}</_Builtin.Block> : null}{backgroundCardImageMemoryCardVisibility ? <_Builtin.Block
+                {...backgroundCardImageMemoryCardImageRuntimeProps}>{backgroundCardImageMemoryCardImageSlot}</_Builtin.Block> : null}{backgroundCardImageWebflowImageVisibility ? <_Builtin.Block
                 className={`memory-wall_image-overlay ${_activeStyleVariant}`}
                 data-w-id="5cc069fb-8c56-60ee-d04f-f97f30631912"
                 tag="div" /> : null}<_Builtin.Block className={`memory-wall_top-content ${_activeStyleVariant}`} tag="div"><_Builtin.Block

@@ -15,7 +15,7 @@ export function Button(
             href: "#"
         },
 
-        buttonButtonText = "see the details",
+        buttonButtonText = "Explore Now",
         buttonButtonLinkRuntimeProps = {}
     }
 ) {
