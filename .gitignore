@@ -4,6 +4,7 @@ dist/
 # generated types
 .astro/
 .npmrc
+.npmrc
 
 # dependencies
 node_modules/
@@ -18,6 +19,7 @@ pnpm-debug.log*
 .env
 .env.production
 webflow.json
+webflow.json
 
 # macOS-specific files
 .DS_Store
@@ -28,5 +30,7 @@ webflow.json
 # wrangler files
 .wrangler
 .dev.vars*
+
+lost+found/
 
 lost+found/

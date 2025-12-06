@@ -111,6 +111,11 @@
   grid-row-gap: var(--_sizes---gap--xxl-gap);
 }
 
+.flex_vertical.flex-align_center {
+  justify-content: center;
+  align-items: center;
+}
+
 @media screen and (max-width: 479px) {
   .flex_vertical.flex-align_center {
     overflow: hidden;

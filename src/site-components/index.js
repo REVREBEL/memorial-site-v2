@@ -23,7 +23,6 @@ export * from "./FilterTagsSlots";
 export * from "./FilterTagsWebflowSlots";
 export * from "./FirstMetFormField";
 export * from "./Footer";
-export * from "./GuestBook";
 export * from "./GuestbookCard";
 export * from "./GuestbookComponentSlots";
 export * from "./GuestbookComponentWebflowSlots";
