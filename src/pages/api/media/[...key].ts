@@ -45,15 +45,19 @@ export const GET: APIRoute = async ({ params, locals }) => {
         }
       }
       
-      // Return a 1x1 transparent PNG as placeholder for development
-      // This prevents broken images in local dev when using production database
+      // Return a 1x1 transparent PNG as placeholder
+      // Use Uint8Array which works in both Node and Cloudflare Workers
       console.log('📷 Returning placeholder image for missing media');
-      const transparentPng = Buffer.from(
-        'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
-        'base64'
-      );
+      const transparentPngBase64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
       
-      return new Response(transparentPng, {
+      // Decode base64 to bytes using atob (works in Workers)
+      const binaryString = atob(transparentPngBase64);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      
+      return new Response(bytes, {
         status: 200,
         headers: {
           'Content-Type': 'image/png',

@@ -297,7 +297,7 @@ export function MemoryWall() {
             <MemoryJournalFilterTagsSlots
               allPostsFIlterTagAllPostsFIlterTagSlot={
                 <MemoryJournalFilterTags
-                  filterVariant={selectedTag === null ? 'All' : 'All'}
+                  filterVariant={selectedTag === null ? 'All' : 'Clear'}
                   tagTagText="All Posts"
                   tagTagRuntimeProps={{
                     onClick: () => setSelectedTag(null),
@@ -320,7 +320,7 @@ export function MemoryWall() {
                       key={tag}
                       filterVariant={
                         selectedTag === tag 
-                          ? 'Clear' 
+                          ? 'All'
                           : (`User Tag ${index + 1}` as any)
                       }
                       tagTagText={tag}
