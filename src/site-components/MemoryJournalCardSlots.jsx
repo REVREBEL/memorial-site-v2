@@ -66,9 +66,7 @@ export function MemoryJournalCardSlots(
     }
 ) {
     return (
-        <_Component className="memory-journal_cards-section" tag="section"><_Builtin.Block className="memory-wall" tag="section"><_Builtin.Block className="flex_vertical flex-align_center" tag="div"><_Builtin.Heading
-                        className="memory-wall_heading flex_horizontal flex-align_center margin-bottom_xsmall text-color-dark-green"
-                        tag={memoryJournalMainHeadlineTag}>{memoryJournalMemoryJournalMainHeadlineText}</_Builtin.Heading>{memoryJournalMainParagraphVisibility ? <_Builtin.Paragraph className="memory-wall_main-headline-paragraph">{memoryJournalMainParagraph}</_Builtin.Paragraph> : null}</_Builtin.Block></_Builtin.Block><_Builtin.Block className="memory-wall" tag="section"><_Builtin.Block className="flex_vertical flex-align_center" tag="div"><_Builtin.Heading className="memory-wall_sub-heading" tag={memoryJournalSubHeadlineTag}>{memoryJournalSubHeadlineText}</_Builtin.Heading>{formButtonButtonVisibility ? <_Builtin.Block
+        <_Component className="memory-journal_cards-section" tag="section"><_Builtin.Block className="memory-wall" tag="section"><_Builtin.Block className="flex_vertical flex-align_center" tag="div"><_Builtin.Heading className="memory-wall_heading" tag={memoryJournalMainHeadlineTag}>{memoryJournalMemoryJournalMainHeadlineText}</_Builtin.Heading>{memoryJournalMainParagraphVisibility ? <_Builtin.Paragraph className="memory-wall_main-headline-paragraph">{memoryJournalMainParagraph}</_Builtin.Paragraph> : null}</_Builtin.Block></_Builtin.Block><_Builtin.Block className="memory-wall" tag="section"><_Builtin.Block className="flex_vertical flex-align_center" tag="div"><_Builtin.Heading className="memory-wall_sub-heading" tag={memoryJournalSubHeadlineTag}>{memoryJournalSubHeadlineText}</_Builtin.Heading>{formButtonButtonVisibility ? <_Builtin.Block
                         className="margin-block_small"
                         tag="div"
                         id={formButtonButtonId}

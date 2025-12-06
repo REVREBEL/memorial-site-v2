@@ -5,10 +5,6 @@ import * as _Builtin from "./_Builtin";
 export function WebflowMemoryJournalCardSlots(
     {
         as: _Component = _Builtin.Block,
-        memoryJournalCardSlosMemoryJournalCardSlotsRuntimeProps = {},
-        memoryJournalCardSlosMemoryJournalCardSlot,
-        memoryJournalCardSlotsId,
-        memoryJournalCardSlosMemoryJournalCardSlotsVisibility = true,
         slot,
         slot,
         slot,
