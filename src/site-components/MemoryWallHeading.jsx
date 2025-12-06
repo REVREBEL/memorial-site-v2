@@ -48,10 +48,6 @@ export function MemoryWallHeading(
                         buttonText={buttonFilledButtonText}
                         variant={buttonFilledVariant}
                         buttonId={buttonFilledButtonId}
-                        buttonLink={buttonFilledButtonLink} /></_Builtin.Block><FilterTagsSlots
-                    tag3Variant={tag3Variant}
-                    tag4Variant={tag4Variant}
-                    tag5Variant={tag5Variant}
-                    tag6Variant={tag6Variant} /></_Builtin.Block><_Builtin.Block className="padding-global padding-section-large" tag="div"><_Builtin.Block className="guestbook_inner-form-container" tag="div" /></_Builtin.Block></_Component>
+                        buttonLink={buttonFilledButtonLink} /></_Builtin.Block><FilterTagsSlots /></_Builtin.Block><_Builtin.Block className="padding-global padding-section-large" tag="div"><_Builtin.Block className="guestbook_inner-form-container" tag="div" /></_Builtin.Block></_Component>
     );
 }
