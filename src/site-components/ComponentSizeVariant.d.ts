@@ -4,13 +4,12 @@ import * as Types from "./types";
 declare function ComponentSizeVariant(
     props: {
         as?: React.ElementType;
-        componentComponentId?: Types.Basic.IdTextInput;
-        componentComponentVisibility?: Types.Visibility.VisibilityConditions;
         /** 375pxx375px
         375px562.5px
         562.5pxx375px*/
         componentComponentSizeVariant?: "1x1" | "2x3" | "3x2";
-        backgroundCardImageMemoryCardVisibility?: Types.Visibility.VisibilityConditions;
+        backgroundCardImageWebflowImageVisibility?: Types.Visibility.VisibilityConditions;
+        backgroundCardImageDevLinkImageVisibility?: Types.Visibility.VisibilityConditions;
         /** This is a div connected to the devlink component slot*/
         backgroundCardImageMemoryCardImageSlot?: Types.Devlink.Slot;
         /** Webflow Native Image connected to the devlink component slot*/
