@@ -2,11 +2,11 @@
 import MainLayout from '../layouts/main.astro';
 import { NavigationWrapper } from '../components/NavigationWrapper';
 import { FooterWrapper } from '../components/FooterWrapper';
-import { GuestBook } from '../components/GuestBook';
+import { GuestBookWrapper } from '../components/GuestBookWrapper';
 ---
 
 <MainLayout>
   <NavigationWrapper client:load />
-  <GuestBook client:only="react" />
+  <GuestBookWrapper client:only="react" />
   <FooterWrapper client:load />
 </MainLayout>
