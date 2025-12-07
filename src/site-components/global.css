@@ -2311,7 +2311,6 @@ textarea.w-select {
   --_apps---colors--muted-foreground: var(--_colors---text-color--text-secondary);
   --_apps---colors--muted-foreground: var(--_colors---text-color--text-secondary);
   --_apps---colors--accent: var(--_colors---core-neutral-color--neutral-secondary);
-  --_apps---colors--accent\<deleted\|variable-090f35e1-3011-58f0-a1ef-ba656048c6cb\>: var(--_colors---core-neutral-color--neutral-secondary);
   --_apps---colors--accent: var(--_colors---core-neutral-color--neutral-secondary);
   --_apps---colors--accent-foreground: var(--_colors---text-color--text-secondary);
   --_apps---colors--accent-foreground: var(--_colors---text-color--text-secondary);
@@ -2468,7 +2467,6 @@ textarea.w-select {
   --_apps---colors--background-dark: var(--_colors---background-color--bg-inverse);
   --_apps---colors--background-dark: var(--_colors---background-color--bg-inverse);
   --_apps---colors--foreground-dark: var(--_colors---text-color--text-inverse-primary);
-  --_apps---colors--foreground-dark\<deleted\|variable-7cbed7a1-3f65-53b5-1196-c9501c0a1600\>: var(--_colors---text-color--text-inverse-primary);
   --_apps---colors--foreground-dark: var(--_colors---text-color--text-inverse-primary);
   --_apps---colors--card-dark: var(--_colors---card--card-inverse-bg);
   --_apps---colors--card-dark: var(--_colors---card--card-inverse-bg);
