@@ -1,12 +1,8 @@
 ---
 import MainLayout from '../layouts/main.astro';
-import { NavigationWrapper } from '../components/NavigationWrapper';
-import { FooterWrapper } from '../components/FooterWrapper';
 import { MemoryWall } from '../components/MemoryWall';
 ---
 
-<MainLayout>
-	<NavigationWrapper client:load />
-	<MemoryWall client:only="react" />
-	<FooterWrapper client:load />
+<MainLayout title="Patricia's Memory Journal - Share Your Memories">
+  <MemoryWall client:only="react" />
 </MainLayout>

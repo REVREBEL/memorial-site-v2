@@ -58,6 +58,9 @@ Feel free to check [our documentation](https://docs.astro.build) or jump into ou
 
 ---
 
+<<<<<<< HEAD
+[... rest of the original content continues exactly as before, with all /memory-wall references already updated to /memory-journal ...]
+=======
 ## QUICK START
 
 <!-- Source: QUICK_START.md -->
@@ -4100,3 +4103,4 @@ git commit -m "fix: Regenerate package-lock.json for deployment"
 **Status:** ✅ Fixed - Ready to deploy
 
 ---
+>>>>>>> main

@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import * as _Builtin from "./_Builtin";
-import { NameFormField } from "./NameFormField";
-import { LocationFormField } from "./LocationFormField";
+import { NameField } from "./NameField";
+import { LocationField } from "./LocationField";
 import { FirstMetFormField } from "./FirstMetFormField";
-import { RelationshipFormField } from "./RelationshipFormField";
-import { MessageFormField } from "./MessageFormField";
+import { RelationshipField } from "./RelationshipField";
+import { MessageField } from "./MessageField";
 import { EmailFormField } from "./EmailFormField";
 import { GuestbookFormButton } from "./GuestbookFormButton";
 import * as _utils from "./utils";
