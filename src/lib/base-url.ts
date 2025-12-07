@@ -1,9 +1,4 @@
-// Avoid relying on `import.meta` so the Webflow bundler (CommonJS) can parse this file.
-const runtimeBaseUrl =
-  typeof window !== "undefined"
-    ? window.location.origin
-    : typeof process !== "undefined" && process.env.BASE_URL
-      ? process.env.BASE_URL
-      : "";
-
-export const baseUrl = runtimeBaseUrl.replace(/\/$/, "");
+// Base URL for the application
+// In production (Webflow Cloud), this will be the mount path (e.g., /memory-journal)
+// In development, this will be empty string
+export const baseUrl = import.meta.env.BASE_URL?.replace(/\/$/, '') || '';

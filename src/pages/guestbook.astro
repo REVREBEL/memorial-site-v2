@@ -1,12 +1,17 @@
 ---
 import MainLayout from '../layouts/main.astro';
-import { NavigationWrapper } from '../components/NavigationWrapper';
-import { FooterWrapper } from '../components/FooterWrapper';
-import { GuestBookWrapper } from '../components/GuestBookWrapper';
 ---
 
-<MainLayout>
-  <NavigationWrapper client:load />
-  <GuestBookWrapper client:only="react" />
-  <FooterWrapper client:load />
+<MainLayout title="Guestbook - Patricia's Memory Journal">
+  <div class="min-h-screen bg-background p-8">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl font-bold text-center mb-4">Guestbook</h1>
+      <p class="text-center text-muted-foreground mb-8">
+        Sign the guestbook and leave a message
+      </p>
+      <div class="bg-card p-6 rounded-lg shadow-lg text-center">
+        <p class="text-muted-foreground">Guestbook feature coming soon...</p>
+      </div>
+    </div>
+  </div>
 </MainLayout>

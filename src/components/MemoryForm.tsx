@@ -1,465 +1,222 @@
 import { useState } from 'react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
-import { Label } from './ui/label';
-import { Checkbox } from './ui/checkbox';
-import { Upload, X, Loader2 } from 'lucide-react';
 import imageCompression from 'browser-image-compression';
+import { baseUrl } from '../lib/base-url';
 
-const TAGS = ['Family', 'Church', 'Cooking', 'Travel', 'Classmates', 'Worklife', '4H Club'];
-
-interface MemoryFormProps {
-  onSubmit: (formData: FormData) => Promise<void>;
+interface Props {
+  onSuccess: () => void;
 }
 
-export function MemoryForm({ onSubmit }: MemoryFormProps) {
-  const [headline, setHeadline] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [memory, setMemory] = useState('');
-  const [memoryDate, setMemoryDate] = useState('');
-  const [memoryLocation, setMemoryLocation] = useState('');
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [photoPreview, setPhotoPreview] = useState('');
-  const [mediaFile, setMediaFile] = useState<File | null>(null);
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [uploading, setUploading] = useState(false);
-  const [compressionStatus, setCompressionStatus] = useState('');
-
-  const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // Check file type
-    if (!file.type.startsWith('image/')) {
-      setErrors({ ...errors, photo: 'Please select an image file' });
-      return;
-    }
-
-    console.log('📷 Original image:', {
-      name: file.name,
-      size: (file.size / 1024 / 1024).toFixed(2) + ' MB',
-      type: file.type
-    });
-
-    // Compress images over 800KB to ensure headroom for form data
-    // This prevents hitting the 1MB proxy limit when combined with text fields
-    if (file.size <= 800 * 1024) {
-      console.log('✅ Image is small enough, no compression needed');
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPhotoPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-      setMediaFile(file);
-      setErrors({ ...errors, photo: '' });
-      return;
-    }
-
-    // Compress image
-    try {
-      setCompressionStatus('Compressing image...');
-      
-      const options = {
-        maxSizeMB: 0.75, // Target 750KB to leave headroom for form data
-        maxWidthOrHeight: 1920, // Max dimension
-        useWebWorker: true,
-        fileType: 'image/jpeg', // Convert to JPEG for better compression
-      };
-
-      console.log('🔄 Compressing image...');
-      const compressedFile = await imageCompression(file, options);
-      
-      console.log('✅ Compressed image:', {
-        name: compressedFile.name,
-        size: (compressedFile.size / 1024 / 1024).toFixed(2) + ' MB',
-        type: compressedFile.type,
-        reduction: ((1 - compressedFile.size / file.size) * 100).toFixed(1) + '%'
-      });
-
-      // Create preview
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPhotoPreview(reader.result as string);
-      };
-      reader.readAsDataURL(compressedFile);
-      
-      setMediaFile(compressedFile);
-      setErrors({ ...errors, photo: '' });
-      setCompressionStatus('');
-    } catch (error) {
-      console.error('❌ Compression error:', error);
-      setErrors({ ...errors, photo: 'Failed to process image' });
-      setCompressionStatus('');
-    }
-  };
-
-  const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // Limit video to 10MB for production
-      if (file.size > 10 * 1024 * 1024) {
-        setErrors({ ...errors, video: 'Video must be less than 10MB. Please compress your video first.' });
-        return;
-      }
-      
-      console.log('🎥 Video selected:', {
-        name: file.name,
-        size: (file.size / 1024 / 1024).toFixed(2) + ' MB',
-        type: file.type
-      });
-      
-      setMediaFile(file);
-      setErrors({ ...errors, video: '' });
-    }
-  };
-
-  const handleTagToggle = (tag: string) => {
-    setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-    );
-  };
-
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const validateForm = () => {
-    const newErrors: { [key: string]: string } = {};
-
-    if (!headline.trim()) {
-      newErrors.headline = 'Headline is required';
-    }
-
-    if (!name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-
-    if (!email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!validateEmail(email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-
-    if (!memory.trim()) {
-      newErrors.memory = 'Memory is required';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+export function MemoryForm({ onSuccess }: Props) {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    headline: '',
+    memory: '',
+    memory_date: '',
+    location: '',
+    tags: '',
+  });
+  const [file, setFile] = useState<File | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    setUploading(true);
-    setErrors({});
+    setError(null);
+    setSubmitting(true);
 
     try {
-      const formData = new FormData();
-      formData.append('headline', headline.trim());
-      formData.append('name', name.trim());
-      formData.append('email', email.trim());
-      formData.append('memory', memory.trim());
+      const submitData = new FormData();
       
-      if (memoryDate.trim()) {
-        formData.append('memoryDate', memoryDate.trim());
-      }
-      
-      if (memoryLocation.trim()) {
-        formData.append('location', memoryLocation.trim());
-      }
-      
-      formData.append('tags', JSON.stringify(selectedTags));
-      
-      if (mediaFile) {
-        console.log('📤 Uploading file:', {
-          name: mediaFile.name,
-          size: (mediaFile.size / 1024 / 1024).toFixed(2) + ' MB',
-          type: mediaFile.type
-        });
-        formData.append('media', mediaFile);
+      // Add all text fields
+      Object.entries(formData).forEach(([key, value]) => {
+        if (value) submitData.append(key, value);
+      });
+
+      // Handle file upload
+      if (file) {
+        let fileToUpload = file;
+        
+        // Compress images larger than 1MB
+        if (file.type.startsWith('image/') && file.size > 1024 * 1024) {
+          console.log('Compressing image...');
+          fileToUpload = await imageCompression(file, {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true,
+          });
+        }
+
+        // Validate file size (5MB for images, 20MB for videos)
+        const maxSize = file.type.startsWith('video/') ? 20 * 1024 * 1024 : 5 * 1024 * 1024;
+        if (fileToUpload.size > maxSize) {
+          throw new Error(`File too large. Max size: ${maxSize / (1024 * 1024)}MB`);
+        }
+
+        submitData.append('file', fileToUpload);
       }
 
-      await onSubmit(formData);
+      const response = await fetch(`${baseUrl}/api/memory_journal`, {
+        method: 'POST',
+        body: submitData,
+      });
 
-      // Reset form on success
-      setHeadline('');
-      setName('');
-      setEmail('');
-      setMemory('');
-      setMemoryDate('');
-      setMemoryLocation('');
-      setSelectedTags([]);
-      setMediaFile(null);
-      setPhotoPreview('');
-    } catch (error) {
-      console.error('❌ Submit error:', error);
-      setErrors({ submit: error instanceof Error ? error.message : 'Failed to submit memory' });
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Failed to submit memory');
+      }
+
+      onSuccess();
+    } catch (err) {
+      console.error('Submit error:', err);
+      setError(err instanceof Error ? err.message : 'Failed to submit memory');
     } finally {
-      setUploading(false);
+      setSubmitting(false);
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      // Validate file type
+      if (!selectedFile.type.startsWith('image/') && !selectedFile.type.startsWith('video/')) {
+        setError('Please select an image or video file');
+        return;
+      }
+      setFile(selectedFile);
+      setError(null);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full">
-      {/* Two-column grid layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-5">
-        {/* LEFT COLUMN */}
-        <div className="space-y-5">
-          {/* Headline - spans both columns on large screens */}
-          <div className="space-y-1.5 lg:col-span-2">
-            <Label htmlFor="headline" className="text-sm font-medium">Headline *</Label>
-            <Input
-              id="headline"
-              value={headline}
-              onChange={(e) => setHeadline(e.target.value)}
-              placeholder="Give your memory a memorable title"
-              className={errors.headline ? 'border-destructive' : ''}
-              disabled={uploading}
-            />
-            {errors.headline && <p className="text-xs text-destructive">{errors.headline}</p>}
-          </div>
-
-          {/* Name */}
-          <div className="space-y-1.5">
-            <Label htmlFor="name" className="text-sm font-medium">Your Name *</Label>
-            <Input
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Enter your name"
-              className={errors.name ? 'border-destructive' : ''}
-              disabled={uploading}
-            />
-            {errors.name && <p className="text-xs text-destructive">{errors.name}</p>}
-          </div>
-
-          {/* Memory Date */}
-          <div className="space-y-1.5">
-            <Label htmlFor="memoryDate" className="text-sm font-medium">When (Optional)</Label>
-            <Input
-              id="memoryDate"
-              value={memoryDate}
-              onChange={(e) => setMemoryDate(e.target.value)}
-              placeholder="e.g., June 2015"
-              disabled={uploading}
-            />
-          </div>
-
-          {/* Photo Upload */}
-          <div className="space-y-1.5">
-            <Label htmlFor="photo" className="text-sm font-medium">Upload Photo (Optional)</Label>
-            <Label htmlFor="photo" className="cursor-pointer block">
-              <div className="border-2 border-dashed rounded-lg p-4 hover:border-primary transition-colors text-center min-h-[140px] flex items-center justify-center">
-                {photoPreview && mediaFile?.type.startsWith('image/') ? (
-                  <div className="relative w-full">
-                    <img
-                      src={photoPreview}
-                      alt="Preview"
-                      className="w-full h-32 object-cover rounded"
-                    />
-                    {!uploading && (
-                      <Button
-                        type="button"
-                        variant="destructive"
-                        size="icon"
-                        className="absolute top-2 right-2 h-7 w-7"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setMediaFile(null);
-                          setPhotoPreview('');
-                        }}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </div>
-                ) : (
-                  <div className="py-3">
-                    <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-                    <p className="text-sm font-medium text-muted-foreground">Upload Photo</p>
-                    <p className="text-xs text-muted-foreground mt-1">Auto-compressed</p>
-                  </div>
-                )}
-              </div>
-            </Label>
-            <Input
-              id="photo"
-              type="file"
-              accept="image/*"
-              onChange={handlePhotoChange}
-              className="hidden"
-              disabled={uploading}
-            />
-            {compressionStatus && (
-              <p className="text-xs text-muted-foreground text-center">{compressionStatus}</p>
-            )}
-            {errors.photo && <p className="text-xs text-destructive">{errors.photo}</p>}
-          </div>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {error && (
+        <div className="p-4 bg-destructive/10 text-destructive rounded-lg">
+          {error}
         </div>
+      )}
 
-        {/* RIGHT COLUMN */}
-        <div className="space-y-5">
-          {/* Empty space to align with headline spanning both columns */}
-          <div className="hidden lg:block lg:col-span-2 h-[76px]"></div>
-          
-          {/* Email */}
-          <div className="space-y-1.5">
-            <Label htmlFor="email" className="text-sm font-medium">Your Email *</Label>
-            <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="your.email@example.com"
-              className={errors.email ? 'border-destructive' : ''}
-              disabled={uploading}
-            />
-            {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
-          </div>
-
-          {/* Memory Location */}
-          <div className="space-y-1.5">
-            <Label htmlFor="memoryLocation" className="text-sm font-medium">Where (Optional)</Label>
-            <Input
-              id="memoryLocation"
-              value={memoryLocation}
-              onChange={(e) => setMemoryLocation(e.target.value)}
-              placeholder="e.g., Grandma's house"
-              disabled={uploading}
-            />
-          </div>
-
-          {/* Video Upload */}
-          <div className="space-y-1.5">
-            <Label htmlFor="video" className="text-sm font-medium">Upload Video (Optional)</Label>
-            <Label htmlFor="video" className="cursor-pointer block">
-              <div className="border-2 border-dashed rounded-lg p-4 hover:border-primary transition-colors text-center min-h-[140px] flex items-center justify-center">
-                {mediaFile?.type.startsWith('video/') ? (
-                  <div className="relative w-full">
-                    <div className="w-full h-32 flex items-center justify-center bg-muted rounded">
-                      <div className="text-center px-3">
-                        <p className="text-sm font-medium text-muted-foreground break-all line-clamp-3">{mediaFile.name}</p>
-                      </div>
-                    </div>
-                    {!uploading && (
-                      <Button
-                        type="button"
-                        variant="destructive"
-                        size="icon"
-                        className="absolute top-2 right-2 h-7 w-7"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setMediaFile(null);
-                        }}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </div>
-                ) : (
-                  <div className="py-3">
-                    <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-                    <p className="text-sm font-medium text-muted-foreground">Upload Video</p>
-                    <p className="text-xs text-muted-foreground mt-1">Max 10MB</p>
-                  </div>
-                )}
-              </div>
-            </Label>
-            <Input
-              id="video"
-              type="file"
-              accept="video/*"
-              onChange={handleVideoChange}
-              className="hidden"
-              disabled={uploading}
-            />
-            {errors.video && <p className="text-xs text-destructive">{errors.video}</p>}
-          </div>
-        </div>
-
-        {/* FULL WIDTH SECTIONS */}
-        {/* Memory - spans both columns */}
-        <div className="space-y-1.5 lg:col-span-2">
-          <Label htmlFor="memory" className="text-sm font-medium">Your Memory *</Label>
-          <Textarea
-            id="memory"
-            value={memory}
-            onChange={(e) => setMemory(e.target.value)}
-            placeholder="Share your memory and story here..."
-            rows={8}
-            className={errors.memory ? 'border-destructive' : ''}
-            disabled={uploading}
-          />
-          {errors.memory && <p className="text-xs text-destructive">{errors.memory}</p>}
-        </div>
-
-        {/* Tags - spans both columns */}
-        <div className="space-y-2 lg:col-span-2">
-          <Label className="text-sm font-medium">Tags (Optional)</Label>
-          <div className="flex flex-wrap gap-4">
-            {TAGS.map((tag) => (
-              <div key={tag} className="flex items-center gap-2">
-                <Checkbox
-                  id={tag}
-                  checked={selectedTags.includes(tag)}
-                  onCheckedChange={() => handleTagToggle(tag)}
-                  disabled={uploading}
-                />
-                <Label
-                  htmlFor={tag}
-                  className="text-sm font-normal cursor-pointer"
-                >
-                  {tag}
-                </Label>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Error Message - spans both columns */}
-        {errors.submit && (
-          <div className="lg:col-span-2 p-3 bg-destructive/10 border border-destructive rounded-md">
-            <p className="text-xs text-destructive">{errors.submit}</p>
-          </div>
-        )}
-
-        {/* Upload Progress - spans both columns */}
-        {uploading && (
-          <div className="lg:col-span-2 flex items-center justify-center gap-2 p-3 bg-muted rounded-md">
-            <Loader2 className="h-4 w-4 animate-spin" />
-            <p className="text-xs text-muted-foreground">Uploading memory...</p>
-          </div>
-        )}
-
-        {/* Action Buttons - spans both columns */}
-        <div className="lg:col-span-2 flex justify-end gap-3 pt-4 border-t">
-          <Button 
-            type="submit" 
-            disabled={uploading}
-            size="lg"
-            className="min-w-[160px]"
-          >
-            {uploading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Uploading...
-              </>
-            ) : (
-              'Share Memory'
-            )}
-          </Button>
-        </div>
+      <div>
+        <label htmlFor="name" className="block text-sm font-medium mb-2">
+          Your Name <span className="text-destructive">*</span>
+        </label>
+        <input
+          type="text"
+          id="name"
+          required
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+        />
       </div>
+
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium mb-2">
+          Email (optional)
+        </label>
+        <input
+          type="email"
+          id="email"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="headline" className="block text-sm font-medium mb-2">
+          Headline <span className="text-destructive">*</span>
+        </label>
+        <input
+          type="text"
+          id="headline"
+          required
+          value={formData.headline}
+          onChange={(e) => setFormData({ ...formData, headline: e.target.value })}
+          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+          placeholder="A short title for your memory"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="memory" className="block text-sm font-medium mb-2">
+          Your Memory <span className="text-destructive">*</span>
+        </label>
+        <textarea
+          id="memory"
+          required
+          rows={6}
+          value={formData.memory}
+          onChange={(e) => setFormData({ ...formData, memory: e.target.value })}
+          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring resize-none"
+          placeholder="Share your memory..."
+        />
+      </div>
+
+      <div>
+        <label htmlFor="memory_date" className="block text-sm font-medium mb-2">
+          Memory Date (optional)
+        </label>
+        <input
+          type="date"
+          id="memory_date"
+          value={formData.memory_date}
+          onChange={(e) => setFormData({ ...formData, memory_date: e.target.value })}
+          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="location" className="block text-sm font-medium mb-2">
+          Location (optional)
+        </label>
+        <input
+          type="text"
+          id="location"
+          value={formData.location}
+          onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+          placeholder="Where did this happen?"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="tags" className="block text-sm font-medium mb-2">
+          Tags (optional)
+        </label>
+        <input
+          type="text"
+          id="tags"
+          value={formData.tags}
+          onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+          placeholder="family, friends, travel (comma-separated)"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="file" className="block text-sm font-medium mb-2">
+          Photo or Video (optional)
+        </label>
+        <input
+          type="file"
+          id="file"
+          accept="image/*,video/*"
+          onChange={handleFileChange}
+          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary file:text-primary-foreground hover:file:opacity-90"
+        />
+        <p className="text-xs text-muted-foreground mt-1">
+          Max 5MB for images, 20MB for videos
+        </p>
+      </div>
+
+      <button
+        type="submit"
+        disabled={submitting}
+        className="w-full py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 font-medium"
+      >
+        {submitting ? 'Submitting...' : 'Share Memory'}
+      </button>
     </form>
   );
 }

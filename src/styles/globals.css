@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+* {
+  border-color: var(--_apps---colors--border, rgba(55, 61, 54, 0.1));
+}
+
+body {
+  background-color: var(--_apps---colors--background, #F5F1EB);
+  color: var(--_apps---colors--foreground, #29708d);
+  font-family: var(--_apps---typography--body-font, Aileron, Arial, sans-serif);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--_apps---typography--heading-font, 'Bodoni Moda', Georgia, serif);
+}
+
+.text-balance {
+  text-wrap: balance;
+}

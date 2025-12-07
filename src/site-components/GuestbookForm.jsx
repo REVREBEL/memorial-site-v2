@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import * as _Builtin from "./_Builtin";
-import { NameFormField } from "./NameFormField";
-import { LocationFormField } from "./LocationFormField";
+import { NameField } from "./NameField";
+import { LocationField } from "./LocationField";
 import { FirstMetFormField } from "./FirstMetFormField";
-import { RelationshipFormField } from "./RelationshipFormField";
-import { MessageFormField } from "./MessageFormField";
+import { RelationshipField } from "./RelationshipField";
+import { MessageField } from "./MessageField";
 import { EmailFormField } from "./EmailFormField";
 import { GuestbookFormButton } from "./GuestbookFormButton";
 
@@ -81,11 +81,11 @@ export function GuestbookForm(
                                 name="wf-form-Contact-Form"
                                 data-name="Contact Form"
                                 method="get"
-                                id="wf-form-Contact-Form"><NameFormField
+                                id="wf-form-Contact-Form"><NameField
                                     fullNameFormFieldVisibility={fullNameFormFieldVisibility}
                                     fullNameFormFieldId={fullNameFormFieldId}
                                     fullNameFormFieldLabel={fullNameFormFieldLabel}
-                                    fullNameFormIconVisibility={fullNameFormIconVisibility} /><LocationFormField
+                                    fullNameFormIconVisibility={fullNameFormIconVisibility} /><LocationField
                                     locationFormFieldVisibility={locationFieldFormFieldVisibility}
                                     locationFormFieldId={locationFieldFormFieldId}
                                     locationFormFieldLabel={locationFieldFormFieldLabel}
@@ -95,7 +95,7 @@ export function GuestbookForm(
                                     firstMetFormFieldId={firstMetFieldFormFieldId}
                                     firstMetFormFieldLabel={firstMetFieldFormFieldLabel}
                                     firstMetFormIconVisibility={firstMetFieldFormIconVisibility}
-                                    firstMetFormInputRuntimeProps={firstMetFieldFormInputRuntimeProps} /><RelationshipFormField
+                                    firstMetFormInputRuntimeProps={firstMetFieldFormInputRuntimeProps} /><RelationshipField
                                     relationshipFieldFormFieldLabel={relationshipFieldFormFieldLabel}
                                     relationshipFieldFormFieldVisibility={relationshipFieldVisibility}
                                     relationshipFieldFormFieldId={relationshipFieldFormId}
@@ -105,23 +105,19 @@ export function GuestbookForm(
                                     relationshipFieldSelectInputFieldRuntimeProps={relationshipFieldRuntimePropsList}
                                     relationshipFieldSelectInputLinkRuntimePropsd={relationshipFieldRuntimePropsListLink}
                                     relationshipFieldSelectInputLink={relationshipFieldInputFieldLink}
-                                    relationshipFieldSelectInputDropdownRuntimeProps={relationshipFieldSelectInputDropdownRuntimeProps} /><MessageFormField
-                                    messageVisibility={messageFieldVisibility}
-                                    messageFormFieldId={messageFieldFormFieldId}
-                                    messageFormFieldLabel={messageFieldFormFieldLabel}
-                                    messageInputFieldId={messageFieldInputFieldId}
-                                    messageInputFieldRuntimeProps={messageFieldInputFieldRuntimeProps}
-                                    messageCharactersVisibility={messageFieldCharactersVisibility}
-                                    messageCharacterLabel={messageFieldCharacterLabel}
-                                    messageCharactersRuntimeProps={messageFieldCharactersRuntimeProps}
-                                    messageCharactersSlot={messageFieldCharactersSlot} /><EmailFormField
-                                    emailFormFieldId={emailFieldFormFieldId}
-                                    emailFormFieldVisibility={emailFieldFormFieldVisibility}
-                                    emailFormFieldLabel={emailFieldFormFieldLabel}
-                                    emailBottomDisclaimerLabel={emailFieldBottomDisclaimerLabel}
-                                    emailDisclaimerVisibility={emailFieldDisclaimerVisibility}
-                                    emailFormIconVisibility={emailFieldFormIconVisibility}
-                                    emailFormInputRuntimeProps={emailFieldFormInputRuntimeProps} /><GuestbookFormButton
+                                    relationshipFieldSelectInputDropdownRuntimeProps={relationshipFieldSelectInputDropdownRuntimeProps} /><MessageField
+                                    shareAMemoryFormInputVisibility={messageFieldVisibility}
+                                    shareAMemoryFormInputId={messageFieldFormFieldId}
+                                    shareAMemoryFormInputLabel={messageFieldCharacterLabel}
+                                    shareAMemoryFormInputRuntimeProps={messageFieldCharactersRuntimeProps}
+                                    shareAMemoryFormInputCharactersSlot={messageFieldCharactersSlot} /><EmailFormField
+                                    emailFieldFormFieldId={emailFieldFormFieldId}
+                                    emailFieldFormFieldVisibility={emailFieldFormFieldVisibility}
+                                    emailFieldFormFieldLabel={emailFieldFormFieldLabel}
+                                    emailFieldBottomDisclaimerLabel={emailFieldBottomDisclaimerLabel}
+                                    emailFieldDisclaimerVisibility={emailFieldDisclaimerVisibility}
+                                    emailFieldFormIconVisibility={emailFieldFormIconVisibility}
+                                    emailFieldFormInputRuntimeProps={emailFieldFormInputRuntimeProps} /><GuestbookFormButton
                                     buttonVisibility={buttonVisibility}
                                     buttonId={buttonId}
                                     buttonButtonIconVisibility={buttonButtonIconVisibility}
